@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -47,11 +47,19 @@ import dev.nm.analysis.function.rn2rm.RealVectorFunction;
 import java.io.IOException;
 import static java.lang.Math.exp;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter7 {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Chapter 7 demos");
-        
+
         Chapter7 chapter7 = new Chapter7();
         chapter7.EulerMethod();
         chapter7.RungeKutta();

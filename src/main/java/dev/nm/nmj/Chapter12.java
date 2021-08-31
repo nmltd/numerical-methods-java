@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -25,7 +25,6 @@ package dev.nm.nmj;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import dev.nm.algebra.linear.matrix.doubles.Matrix;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.triangle.SymmetricMatrix;
@@ -107,6 +106,14 @@ import dev.nm.stat.test.rank.wilcoxon.WilcoxonSignedRank;
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter12 {
 
     public static void main(String[] args) throws Exception {

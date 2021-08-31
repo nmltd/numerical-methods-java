@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Numerical Method Inc.
- * http://www.numericalmethod.com/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -70,7 +70,6 @@ import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.n
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.nonstationary.GeneralizedMinimalResidualSolver;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.nonstationary.MinimalResidualSolver;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.nonstationary.QuasiMinimalResidualSolver;
-import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.nonstationary.SteepestDescentSolver;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.stationary.GaussSeidelSolver;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.stationary.JacobiSolver;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.stationary.SuccessiveOverrelaxationSolver;
@@ -88,8 +87,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
  *
  * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
  */
 public class Chapter2 {
 

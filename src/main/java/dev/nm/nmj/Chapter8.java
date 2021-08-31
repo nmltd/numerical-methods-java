@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -23,7 +23,6 @@
 package dev.nm.nmj;
 
 import dev.nm.algebra.linear.vector.doubles.Vector;
-import dev.nm.analysis.differentialequation.pde.PDESolver;
 import dev.nm.analysis.differentialequation.pde.finitedifference.PDESolutionGrid2D;
 import dev.nm.analysis.differentialequation.pde.finitedifference.PDESolutionTimeSpaceGrid1D;
 import dev.nm.analysis.differentialequation.pde.finitedifference.PDESolutionTimeSpaceGrid2D;
@@ -45,11 +44,19 @@ import dev.nm.analysis.function.rn2r1.univariate.AbstractUnivariateRealFunction;
 import dev.nm.number.DoubleUtils;
 import static java.lang.Math.*;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter8 {
 
     public static void main(String[] args) {
         System.out.println("Chapter 8 demos");
-        
+
         Chapter8 chapter8 = new Chapter8();
         chapter8.solve_Poisson_equation_0010();
         chapter8.solve_Poisson_equation_0020();

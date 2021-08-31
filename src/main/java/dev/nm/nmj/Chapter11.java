@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -49,6 +49,14 @@ import dev.nm.solver.problem.OptimProblem;
 import dev.nm.stat.random.rng.univariate.RandomLongGenerator;
 import dev.nm.stat.random.rng.univariate.uniform.UniformRNG;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter11 {
 
     public static void main(String[] args) throws Exception {

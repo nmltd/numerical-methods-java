@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -55,6 +55,14 @@ import dev.nm.stat.regression.linear.ols.OLSRegression;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter14 {
 
     public static void main(String[] args) throws Exception {

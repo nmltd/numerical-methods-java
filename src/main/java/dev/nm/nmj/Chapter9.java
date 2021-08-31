@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -26,716 +26,643 @@ import dev.nm.algebra.linear.matrix.doubles.Matrix;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
 import dev.nm.algebra.linear.vector.doubles.Vector;
 import dev.nm.algebra.linear.vector.doubles.dense.DenseVector;
-import dev.nm.analysis.function.rn2r1.univariate.AbstractUnivariateRealFunction;
-import dev.nm.analysis.function.rn2r1.univariate.UnivariateRealFunction;
-import dev.nm.analysis.function.special.gaussian.CumulativeNormalMarsaglia;
-import dev.nm.analysis.function.special.gaussian.Gaussian;
-import dev.nm.analysis.function.special.gaussian.StandardCumulativeNormal;
-import dev.nm.interval.RealInterval;
-import dev.nm.number.DoubleUtils;
-import dev.nm.stat.descriptive.covariance.SampleCovariance;
-import dev.nm.stat.descriptive.moment.Kurtosis;
-import dev.nm.stat.descriptive.moment.Mean;
-import dev.nm.stat.descriptive.moment.Skewness;
-import dev.nm.stat.descriptive.moment.Variance;
-import dev.nm.stat.distribution.univariate.BetaDistribution;
-import dev.nm.stat.distribution.univariate.EmpiricalDistribution;
-import dev.nm.stat.distribution.univariate.ExponentialDistribution;
-import dev.nm.stat.distribution.univariate.GammaDistribution;
-import dev.nm.stat.distribution.univariate.PoissonDistribution;
-import dev.nm.stat.distribution.univariate.ProbabilityDistribution;
-import dev.nm.stat.random.Estimator;
-import dev.nm.stat.random.rng.multivariate.MultinomialRVG;
-import dev.nm.stat.random.rng.multivariate.NormalRVG;
-import dev.nm.stat.random.rng.multivariate.RandomVectorGenerator;
-import dev.nm.stat.random.rng.multivariate.UniformDistributionOverBox;
-import dev.nm.stat.random.rng.univariate.InverseTransformSampling;
-import dev.nm.stat.random.rng.univariate.RandomLongGenerator;
-import dev.nm.stat.random.rng.univariate.RandomNumberGenerator;
-import dev.nm.stat.random.rng.univariate.beta.Cheng1978;
-import dev.nm.stat.random.rng.univariate.beta.RandomBetaGenerator;
-import dev.nm.stat.random.rng.univariate.exp.RandomExpGenerator;
-import dev.nm.stat.random.rng.univariate.exp.Ziggurat2000Exp;
-import dev.nm.stat.random.rng.univariate.gamma.KunduGupta2007;
-import dev.nm.stat.random.rng.univariate.normal.NormalRNG;
-import dev.nm.stat.random.rng.univariate.normal.RandomStandardNormalGenerator;
-import dev.nm.stat.random.rng.univariate.normal.Zignor2005;
-import dev.nm.stat.random.rng.univariate.poisson.Knuth1969;
-import dev.nm.stat.random.rng.univariate.uniform.UniformRNG;
-import dev.nm.stat.random.rng.univariate.uniform.linear.CompositeLinearCongruentialGenerator;
-import dev.nm.stat.random.rng.univariate.uniform.linear.LEcuyer;
-import dev.nm.stat.random.rng.univariate.uniform.linear.Lehmer;
-import dev.nm.stat.random.rng.univariate.uniform.linear.LinearCongruentialGenerator;
-import dev.nm.stat.random.rng.univariate.uniform.mersennetwister.MersenneTwister;
-import dev.nm.stat.random.sampler.resampler.BootstrapEstimator;
-import dev.nm.stat.random.sampler.resampler.bootstrap.CaseResamplingReplacement;
-import dev.nm.stat.random.sampler.resampler.bootstrap.block.PattonPolitisWhite2009;
-import dev.nm.stat.random.sampler.resampler.bootstrap.block.PattonPolitisWhite2009ForObject;
-import dev.nm.stat.random.variancereduction.AntitheticVariates;
-import dev.nm.stat.random.variancereduction.CommonRandomNumbers;
-import dev.nm.stat.random.variancereduction.ControlVariates;
-import dev.nm.stat.random.variancereduction.ImportanceSampling;
-import dev.nm.stat.test.distribution.normality.ShapiroWilk;
-import static java.lang.Math.PI;
-import static java.lang.Math.sin;
+import dev.nm.analysis.function.matrix.RntoMatrix;
+import dev.nm.analysis.function.polynomial.Polynomial;
+import dev.nm.analysis.function.rn2r1.AbstractBivariateRealFunction;
+import dev.nm.analysis.function.rn2r1.RealScalarFunction;
+import dev.nm.analysis.function.rn2rm.RealVectorFunction;
+import dev.nm.analysis.function.special.gamma.LogGamma;
+import dev.nm.solver.IterativeSolution;
+import dev.nm.solver.multivariate.unconstrained.BruteForceMinimizer;
+import dev.nm.solver.multivariate.unconstrained.DoubleBruteForceMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.conjugatedirection.ConjugateGradientMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.conjugatedirection.FletcherReevesMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.conjugatedirection.PowellMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.conjugatedirection.ZangwillMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.quasinewton.BFGSMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.quasinewton.DFPMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.quasinewton.HuangMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.quasinewton.PearsonMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.quasinewton.QuasiNewtonMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.quasinewton.RankOneMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.steepestdescent.FirstOrderMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.steepestdescent.GaussNewtonMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.steepestdescent.NewtonRaphsonMinimizer;
+import dev.nm.solver.multivariate.unconstrained.c2.steepestdescent.SteepestDescentMinimizer;
+import dev.nm.solver.problem.C2OptimProblem;
+import dev.nm.solver.problem.C2OptimProblemImpl;
+import dev.nm.solver.problem.OptimProblem;
+import dev.nm.root.univariate.UnivariateMinimizer;
+import dev.nm.root.univariate.bracketsearch.BracketSearchMinimizer;
+import dev.nm.root.univariate.bracketsearch.BrentMinimizer;
+import dev.nm.root.univariate.bracketsearch.FibonaccMinimizer;
+import dev.nm.root.univariate.bracketsearch.GoldenMinimizer;
+import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter9 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("Chapter 9 demos");
 
         Chapter9 chapter9 = new Chapter9();
-        chapter9.lcgs();
-        chapter9.MT19937();
-        chapter9.normal_rng();
-        chapter9.beta_rng();
-        chapter9.gamma_rng();
-        chapter9.Poisson_rng();
-        chapter9.exponential_rng();
-        chapter9.compute_Pi();
-        chapter9.normal_rvg();
-        chapter9.multinomial_rvg();
-        chapter9.empirical_rng();
-        chapter9.case_resampling_1();
-        chapter9.case_resampling_2();
-        chapter9.bootstrapping_methods();
-        chapter9.crn();
-        chapter9.antithetic_variates();
-        chapter9.control_variates();
-        chapter9.importance_sampling_1();
-        chapter9.importance_sampling_2();
+        chapter9.solve_by_brute_force_search_1();
+        chapter9.solve_by_brute_force_search_2();
+        chapter9.solve_by_brute_force_search_3();
+        chapter9.solve_by_brute_force_search_4();
+        chapter9.solve_loggamma_by_bracketing();
+        chapter9.solve_by_steepest_descent();
+        chapter9.solve_by_Newton_Raphson();
+        chapter9.solve_by_Gauss_Newton();
+        chapter9.solve_by_conjugate_direction_methods();
+        chapter9.solve_by_quasi_Newton();
     }
 
-    // from
-    // https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-in-practice/variance-reduction-methods
-    private void importance_sampling_2() {
-        RandomNumberGenerator rng = new UniformRNG();
-        rng.seed(1234567892L);
+    public void solve_by_brute_force_search_1() throws Exception {
+        System.out.println("solve uniivariate function by brute force search");
 
-        int N = 16;
-        for (int n = 0; n < 10; ++n) {
-            float sumUniform = 0, sumImportance = 0;
-            for (int i = 0; i < N; ++i) {
-                double r = rng.nextDouble();
-                sumUniform += sin(r * PI * 0.5);
-                double xi = sqrt(r) * PI * 0.5;
-                sumImportance += sin(xi) / ((8 * xi) / (PI * PI));
-            }
-            sumUniform *= (PI * 0.5) / N;
-            sumImportance *= 1.f / N;
-            System.out.println(String.format("%f %f\n", sumUniform, sumImportance));
-        }
-    }
-
-    private void importance_sampling_1() {
-        UnivariateRealFunction h = new AbstractUnivariateRealFunction() {
+        // define the optimization problem using an objective function
+        OptimProblem problem = new OptimProblem() {
 
             @Override
-            public double evaluate(double x) {
-                return x; // the identity function
+            public int dimension() {
+                return 1;
             }
-        };
-
-        UnivariateRealFunction w = new AbstractUnivariateRealFunction() {
-            private final Gaussian phi = new Gaussian();
-            private final StandardCumulativeNormal N = new CumulativeNormalMarsaglia();
-            private final double I = N.evaluate(1) - N.evaluate(0);
 
             @Override
-            public double evaluate(double x) {
-                double w = phi.evaluate(x) / I; // the weight
-                return w;
-            }
-        };
+            public RealScalarFunction f() {
+                return new RealScalarFunction() {
 
-        RandomNumberGenerator rng = new UniformRNG();
-        rng.seed(1234567892L);
-
-        ImportanceSampling is = new ImportanceSampling(h, w, rng);
-        Estimator estimator = is.estimate(100000);
-        System.out.println(
-                String.format(
-                        "mean = %f, variance = %f",
-                        estimator.mean(),
-                        estimator.variance()));
-    }
-
-    private void control_variates() {
-        UnivariateRealFunction f
-                = new AbstractUnivariateRealFunction() {
-
-            @Override
-            public double evaluate(double x) {
-                double fx = 1. / (1. + x);
-                return fx;
-            }
-        };
-
-        UnivariateRealFunction g
-                = new AbstractUnivariateRealFunction() {
-
-            @Override
-            public double evaluate(double x) {
-                double gx = 1. + x;
-                return gx;
-            }
-        };
-
-        RandomLongGenerator uniform = new UniformRNG();
-        uniform.seed(1234567891L);
-
-        ControlVariates cv
-                = new ControlVariates(f, g, 1.5, -0.4773, uniform);
-        ControlVariates.Estimator estimator = cv.estimate(1500);
-        System.out.println(
-                String.format(
-                        "mean = %f, variance = %f, b = %f",
-                        estimator.mean(),
-                        estimator.variance(),
-                        estimator.b()));
-    }
-
-    private void antithetic_variates() {
-        UnivariateRealFunction f
-                = new AbstractUnivariateRealFunction() {
-
-            @Override
-            public double evaluate(double x) {
-                double fx = 1. / (1. + x);
-                return fx;
-            }
-        };
-
-        RandomLongGenerator uniform = new UniformRNG();
-        uniform.seed(1234567894L);
-
-        AntitheticVariates av
-                = new AntitheticVariates(
-                        f,
-                        uniform,
-                        AntitheticVariates.REFLECTION);
-        Estimator estimator = av.estimate(1500);
-        System.out.println(
-                String.format(
-                        "mean = %f, variance = %f",
-                        estimator.mean(),
-                        estimator.variance()));
-    }
-
-    private void crn() {
-        final UnivariateRealFunction f
-                = new AbstractUnivariateRealFunction() {
-
-            @Override
-            public double evaluate(double x) {
-                double fx = 2. - Math.sin(x) / x;
-                return fx;
-            }
-        };
-
-        final UnivariateRealFunction g
-                = new AbstractUnivariateRealFunction() {
-
-            @Override
-            public double evaluate(double x) {
-                double gx = Math.exp(x * x) - 0.5;
-                return gx;
-            }
-        };
-
-        RandomLongGenerator X1 = new UniformRNG();
-        X1.seed(1234567890L);
-
-        CommonRandomNumbers crn0
-                = new CommonRandomNumbers(
-                        f,
-                        g,
-                        X1,
-                        new AbstractUnivariateRealFunction() { // another independent uniform RNG
-                    final RandomLongGenerator X2 = new UniformRNG();
-
-                    {
-                        X2.seed(246890123L);
+                    // the objective function
+                    @Override
+                    public Double evaluate(Vector v) {
+                        double x = v.get(1);
+                        Polynomial polynomial = new Polynomial(1, 0, -4); // f(x) = x^2 - 4
+                        double fx = polynomial.evaluate(x);
+                        return fx;
                     }
 
                     @Override
-                    public double evaluate(double x) {
-                        return X2.nextDouble();
+                    public int dimensionOfDomain() {
+                        return 1;
                     }
-                });
-        Estimator estimator0 = crn0.estimate(100_000);
-        System.out.println(
-                String.format("d = %f, variance = %f",
-                        estimator0.mean(),
-                        estimator0.variance()));
 
-        CommonRandomNumbers crn1
-                = new CommonRandomNumbers(f, g, X1); // use X1 for both f and g
-        Estimator estimator1 = crn1.estimate(100_000);
-        System.out.println(
-                String.format("d = %f, variance = %f",
-                        estimator1.mean(),
-                        estimator1.variance()));
-    }
-
-    /**
-     * Constructs a dependent sequence (consisting of 0 and 1) by retaining the
-     * last value with probability <i>q</i> while changing the last value with
-     * probability <i>1-q</i>.
-     * <p/>
-     * The simple bootstrapping method {@linkplain CaseResamplingReplacement}
-     * will severely overestimate the occurrences of certain pattern, while
-     * block bootstrapping method {@linkplain BlockBootstrap} gives a good
-     * estimation of the occurrences in the original sample. All estimators over
-     * estimate.
-     */
-    private void bootstrapping_methods() {
-        final int N = 10000;
-        final double q = 0.70; // the probability of retaining last value
-
-        UniformRNG uniformRNG = new UniformRNG();
-        uniformRNG.seed(1234567890L);
-
-        // generate a randome series of 0s and 1s with serial correlation
-        final double[] sample = new double[N];
-        sample[0] = uniformRNG.nextDouble() > 0.5 ? 1 : 0;
-        for (int i = 1; i < N; ++i) {
-            sample[i] = uniformRNG.nextDouble() < q ? sample[i - 1] : 1 - sample[i - 1];
-        }
-
-        // simple case resampling with replacement method
-        CaseResamplingReplacement simpleBoot
-                = new CaseResamplingReplacement(sample, uniformRNG);
-        Mean countInSimpleBootstrap = new Mean();
-
-        RandomNumberGenerator rlg = new Ziggurat2000Exp();
-        rlg.seed(1234567890L);
-
-        // Patton-Politis-White method using stationary blocks
-        PattonPolitisWhite2009 stationaryBlock
-                = new PattonPolitisWhite2009(
-                        sample,
-                        PattonPolitisWhite2009ForObject.Type.STATIONARY,
-                        uniformRNG,
-                        rlg);
-        Mean countInStationaryBlockBootstrap = new Mean();
-
-        // Patton-Politis-White method using circular blocks
-        PattonPolitisWhite2009 circularBlock
-                = new PattonPolitisWhite2009(
-                        sample,
-                        PattonPolitisWhite2009ForObject.Type.CIRCULAR,
-                        uniformRNG,
-                        rlg);
-        Mean countInCircularBlockBootstrap = new Mean();
-
-        // change this line to use a different pattern
-        final double[] pattern = new double[]{1, 0, 1, 0, 1};
-
-        final int B = 10000;
-        for (int i = 0; i < B; ++i) {
-            // count the number of occurrences for the pattern in the series
-            int numberOfMatches = match(simpleBoot.newResample(), pattern);
-            countInSimpleBootstrap.addData(numberOfMatches);
-
-            // count the number of occurrences for the pattern in the series
-            numberOfMatches = match(stationaryBlock.newResample(), pattern);
-            countInStationaryBlockBootstrap.addData(numberOfMatches);
-
-            // count the number of occurrences for the pattern in the series
-            numberOfMatches = match(circularBlock.newResample(), pattern);
-            countInCircularBlockBootstrap.addData(numberOfMatches);
-        }
-
-        // compare the numbers of occurrences of the pattern using different bootstrap methods
-        int countInSample = match(sample, pattern);
-        System.out.println("matched patterns in sample: " + countInSample);
-        System.out.println("matched patterns in simple bootstrap: " + countInSimpleBootstrap.value());
-        System.out.println("matched patterns in stationary block bootstrap: " + countInStationaryBlockBootstrap.value());
-        System.out.println("matched patterns in circular block bootstrap: " + countInCircularBlockBootstrap.value());
-    }
-
-    private static int match(double[] seq, double[] pattern) {
-        int count = 0;
-        for (int i = 0; i < seq.length - pattern.length; ++i) {
-            if (seq[i] == pattern[0]) {
-                double[] trunc = Arrays.copyOfRange(seq, i, i + pattern.length);
-                if (DoubleUtils.equal(trunc, pattern, 1e-7)) {
-                    count++;
-                }
+                    @Override
+                    public int dimensionOfRange() {
+                        return 1;
+                    }
+                };
             }
-        }
-        return count;
+        };
+
+        // set up the solver to use and the solution
+        DoubleBruteForceMinimizer solver = new DoubleBruteForceMinimizer(false);
+        BruteForceMinimizer.Solution soln = solver.solve(problem);
+
+        // for brute force search, we need to explicitly enumerate the values in the domain
+        List<Vector> domain = new ArrayList<>();
+        domain.add(new DenseVector(-2.));
+        domain.add(new DenseVector(-1.));
+        domain.add(new DenseVector(0.)); // the minimizer
+        domain.add(new DenseVector(1.));
+        domain.add(new DenseVector(2.));
+        soln.setDomain(domain);
+
+        System.out.println(String.format("f(%s) = %f", soln.minimizer(), soln.min()));
     }
 
-    private void case_resampling_1() {
-        // sample from true population
-        double[] sample = new double[]{150., 155., 160., 165., 170.};
-        CaseResamplingReplacement boot = new CaseResamplingReplacement(sample);
-        boot.seed(1234567890L);
+    public void solve_by_brute_force_search_2() throws Exception {
+        System.out.println("solve multivariate function by brute force search");
 
-        int B = 1000;
-        double[] means = new double[B];
-        for (int i = 0; i < B; ++i) {
-            double[] resample = boot.newResample();
-            means[i] = new Mean(resample).value();
-        }
+        OptimProblem problem = new OptimProblem() {
 
-        // estimator of population mean
-        double mean = new Mean(means).value();
-        // variance of estimator; limited by sample size (regardless of how big B is)
-        double var = new Variance(means).value();
-
-        System.out.println(
-                String.format("mean = %f, variance of the estimated mean = %f",
-                        mean,
-                        var));
-    }
-
-    private void case_resampling_2() {
-        // sample from true population
-        double[] sample = new double[]{150., 155., 160., 165., 170.};
-        CaseResamplingReplacement boot = new CaseResamplingReplacement(sample);
-        boot.seed(1234567890L);
-
-        int B = 1000;
-        BootstrapEstimator estimator
-                = new BootstrapEstimator(boot, () -> new Mean(), B);
-
-        System.out.println(
-                String.format("mean = %f, variance of the estimated mean = %f",
-                        estimator.value(),
-                        estimator.variance()));
-    }
-
-    private void empirical_rng() {
-        // we first generate some samples from standard normal distribution
-        RandomLongGenerator uniform = new MersenneTwister();
-        uniform.seed(1234567890L);
-
-        RandomStandardNormalGenerator rng1 = new Zignor2005(uniform); // mean = 0, stdev = 1
-        int N = 1000;
-        double[] x1 = new double[N];
-        for (int i = 0; i < N; ++i) {
-            x1[i] = rng1.nextDouble();
-        }
-
-        // compute the empirical distribution function from the sample data
-        EmpiricalDistribution dist2 = new EmpiricalDistribution(x1);
-
-        // construct an RNG using inverse transform sampling method
-        InverseTransformSampling rng2 = new InverseTransformSampling(dist2);
-
-        // generate some random variates from the RNG
-        double[] x2 = new double[N];
-        for (int i = 0; i < N; ++i) {
-            x2[i] = rng2.nextDouble();
-        }
-
-        // check the properties of the random variates
-        Variance var = new Variance(x2);
-        double mean = var.mean();
-        double stdev = var.standardDeviation();
-        System.out.println(String.format("mean = %f, standard deviation = %f", mean, stdev));
-
-        // check if the samples are normally distributed
-        ShapiroWilk test = new ShapiroWilk(x2);
-        System.out.println(String.format("ShapiroWilk statistics = %f, pValue = %f", test.statistics(), test.pValue()));
-    }
-
-    private void multinomial_rvg() {
-        MultinomialRVG rvg
-                = new MultinomialRVG(100_000, new double[]{0.7, 0.3}); // bin0 is 70% chance, bin1 30% chance
-        double[] bin = rvg.nextVector();
-
-        double total = 0;
-        for (int i = 0; i < bin.length; ++i) {
-            total += bin[i];
-        }
-
-        double bin0 = bin[0] / total; // bin0 percentage
-        double bin1 = bin[1] / total; // bin0 percentage
-
-        System.out.println(String.format("bin0 %% = %f, bin1 %% = %f", bin0, bin1));
-    }
-
-    private void normal_rvg() {
-        // mean
-        Vector mu = new DenseVector(new double[]{-2., 2.});
-        // covariance matrix
-        Matrix sigma = new DenseMatrix(new double[][]{
-            {1., 0.5},
-            {0.5, 1.}
-        });
-        NormalRVG rvg = new NormalRVG(mu, sigma);
-        rvg.seed(1234567890L);
-
-        final int size = 10_000;
-        double[][] x = new double[size][];
-
-        Mean mean1 = new Mean();
-        Mean mean2 = new Mean();
-        for (int i = 0; i < size; ++i) {
-            double[] v = rvg.nextVector();
-            mean1.addData(v[0]);
-            mean2.addData(v[1]);
-
-            x[i] = v;
-        }
-
-        System.out.println(String.format("mean of X_1 = %f", mean1.value()));
-        System.out.println(String.format("mean of X_2 = %f", mean2.value()));
-
-        Matrix X = new DenseMatrix(x);
-        SampleCovariance cov = new SampleCovariance(X);
-        System.out.println(String.format("sample covariance = %s", cov.toString()));
-    }
-
-    private void compute_Pi() {
-        final int N = 1_000_000;
-
-        RandomVectorGenerator rvg
-                = new UniformDistributionOverBox(
-                        new RealInterval(-1., 1.), // a unit square box
-                        new RealInterval(-1., 1.));
-
-        int N0 = 0;
-        for (int i = 0; i < N; i++) {
-            double[] xy = rvg.nextVector();
-            double x = xy[0], y = xy[1];
-            if (x * x + y * y <= 1.) { // check if the dot is inside a circle
-                N0++;
+            @Override
+            public int dimension() {
+                return 2;
             }
-        }
-        double pi = 4. * N0 / N;
-        System.out.println("pi = " + pi);
+
+            @Override
+            public RealScalarFunction f() {
+                return new RealScalarFunction() {
+
+                    @Override
+                    public Double evaluate(Vector v) {
+                        double x = v.get(1);
+                        double y = v.get(2);
+
+                        double fx = x * x + y * y;
+                        return fx;
+                    }
+
+                    @Override
+                    public int dimensionOfDomain() {
+                        return 2;
+                    }
+
+                    @Override
+                    public int dimensionOfRange() {
+                        return 1;
+                    }
+                };
+            }
+        };
+
+        DoubleBruteForceMinimizer bf = new DoubleBruteForceMinimizer(true);
+        BruteForceMinimizer.Solution soln = bf.solve(problem);
+        List<Vector> domain = new ArrayList<>();
+        domain.add(new DenseVector(-2., -2.));
+        domain.add(new DenseVector(-1., -1.));
+        domain.add(new DenseVector(0., 0.)); // the minimizer
+        domain.add(new DenseVector(1., 1.));
+        domain.add(new DenseVector(2., 2.));
+        soln.setDomain(domain);
+
+        System.out.println(String.format("f(%s) = %f", soln.minimizer(), soln.min()));
     }
 
-    private void exponential_rng() {
-        int size = 500_000;
+    public void solve_by_brute_force_search_3() throws Exception {
+        System.out.println("solve uniivariate function by brute force search");
 
-        RandomExpGenerator rng = new Ziggurat2000Exp();
-        rng.seed(634641070L);
+        // set up the solver to use and the solution
+        DoubleBruteForceMinimizer solver = new DoubleBruteForceMinimizer(false);
+        BruteForceMinimizer.Solution soln
+                = solver.solve(new C2OptimProblemImpl(new Polynomial(1, 0, -4))); // f(x) = x^2 - 4
 
-        double[] x = new double[size];
-        for (int i = 0; i < size; ++i) {
-            x[i] = rng.nextDouble();
-        }
+        // for brute force search, we need to explicitly enumerate the values in the domain
+        List<Vector> domain = new ArrayList<>();
+        domain.add(new DenseVector(-2.));
+        domain.add(new DenseVector(-1.));
+        domain.add(new DenseVector(0.)); // the minimizer
+        domain.add(new DenseVector(1.));
+        domain.add(new DenseVector(2.));
+        soln.setDomain(domain);
 
-        // compute the sample statistics
-        Mean mean = new Mean(x);
-        Variance var = new Variance(x);
-        Skewness skew = new Skewness(x);
-        Kurtosis kurtosis = new Kurtosis(x);
-
-        // compute the theoretial statistics
-        ProbabilityDistribution dist = new ExponentialDistribution();
-
-        // compute the theoretial statistics
-        printStats(dist, mean, var, skew, kurtosis);
+        System.out.println(String.format("f(%s) = %f", soln.minimizer(), soln.min()));
     }
 
-    private void Poisson_rng() {
-        final int N = 10_000;
-        double lambda = 1;
+    public void solve_by_brute_force_search_4() throws Exception {
+        System.out.println("solve multivariate function by brute force search");
 
-        RandomNumberGenerator rng = new Knuth1969(lambda);
-        rng.seed(123456789L);
+        DoubleBruteForceMinimizer bf = new DoubleBruteForceMinimizer(true);
+        BruteForceMinimizer.Solution soln = bf.solve(
+                new C2OptimProblemImpl(
+                        new AbstractBivariateRealFunction() {
+                    @Override
+                    public double evaluate(double x, double y) {
+                        double fx = x * x + y * y;
+                        return fx;
+                    }
+                }));
 
-        double[] x = new double[N];
-        for (int i = 0; i < N; ++i) {
-            x[i] = rng.nextDouble();
-        }
+        List<Vector> domain = new ArrayList<>();
+        domain.add(new DenseVector(-2., -2.));
+        domain.add(new DenseVector(-1., -1.));
+        domain.add(new DenseVector(0., 0.)); // the minimizer
+        domain.add(new DenseVector(1., 1.));
+        domain.add(new DenseVector(2., 2.));
+        soln.setDomain(domain);
 
-        // compute the sample statistics
-        Mean mean = new Mean(x);
-        Variance var = new Variance(x);
-        Skewness skew = new Skewness(x);
-        Kurtosis kurtosis = new Kurtosis(x);
-
-        // compute the theoretial statistics
-        PoissonDistribution dist = new PoissonDistribution(lambda);
-
-        // compute the theoretial statistics
-        printStats(dist, mean, var, skew, kurtosis);
+        System.out.println(String.format("f(%s) = %f", soln.minimizer(), soln.min()));
     }
 
-    private void gamma_rng() {
-        final int size = 1_000_000;
+    public void solve_loggamma_by_bracketing() throws Exception {
+        System.out.println("solve loggamma function by bracketing");
 
-        final double k = 0.1;
-        final double theta = 1;
+        LogGamma logGamma = new LogGamma(); // the log-gamma function
 
-        KunduGupta2007 rng = new KunduGupta2007(k, theta, new UniformRNG());
-        rng.seed(1234567895L);
+        BracketSearchMinimizer solver1 = new FibonaccMinimizer(1e-8, 15);
+        UnivariateMinimizer.Solution soln1 = solver1.solve(logGamma);
+        double x_min_1 = soln1.search(0, 5);
+        System.out.println(String.format("f(%f) = %f", x_min_1, logGamma.evaluate(x_min_1)));
 
-        double[] x = new double[size];
-        for (int i = 0; i < size; ++i) {
-            x[i] = rng.nextDouble();
-        }
+        BracketSearchMinimizer solver2 = new GoldenMinimizer(1e-8, 15);
+        UnivariateMinimizer.Solution soln2 = solver2.solve(logGamma);
+        double x_min_2 = soln2.search(0, 5);
+        System.out.println(String.format("f(%f) = %f", x_min_2, logGamma.evaluate(x_min_2)));
 
-        // compute the sample statistics
-        Mean mean = new Mean(x);
-        Variance var = new Variance(x);
-        Skewness skew = new Skewness(x);
-        Kurtosis kurtosis = new Kurtosis(x);
-
-        // compute the theoretial statistics
-        ProbabilityDistribution dist = new GammaDistribution(k, theta);
-
-        // compute the theoretial statistics
-        printStats(dist, mean, var, skew, kurtosis);
+        BracketSearchMinimizer solver3 = new BrentMinimizer(1e-8, 10);
+        UnivariateMinimizer.Solution soln3 = solver3.solve(logGamma);
+        double x_min_3 = soln3.search(0, 5);
+        System.out.println(String.format("f(%f) = %f", x_min_3, logGamma.evaluate(x_min_3)));
     }
 
-    private void beta_rng() {
-        final int size = 1_000_000;
+    public void solve_by_steepest_descent() throws Exception {
+        System.out.println("solve multivariate function by steepest-descent");
 
-        final double alpha = 0.1;
-        final double beta = 0.2;
+        // the objective function
+        // the global minimizer is at x = [0,0,0,0]
+        RealScalarFunction f = new RealScalarFunction() {
 
-        RandomBetaGenerator rng = new Cheng1978(alpha, beta, new UniformRNG());
-        rng.seed(1234567890L);
+            @Override
+            public Double evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+                double x3 = x.get(3);
+                double x4 = x.get(4);
 
-        double[] x = new double[size];
-        for (int i = 0; i < size; ++i) {
-            x[i] = rng.nextDouble();
-        }
+                double result = pow(x1 - 4 * x2, 4);
+                result += 12 * pow(x3 - x4, 4);
+                result += 3 * pow(x2 - 10 * x3, 2);
+                result += 55 * pow(x1 - 2 * x4, 2);
 
-        // compute the sample statistics
-        Mean mean = new Mean(x);
-        Variance var = new Variance(x);
-        Skewness skew = new Skewness(x);
-        Kurtosis kurtosis = new Kurtosis(x);
+                return result;
+            }
 
-        // compute the theoretial statistics
-        ProbabilityDistribution dist = new BetaDistribution(alpha, beta);
+            @Override
+            public int dimensionOfDomain() {
+                return 4;
+            }
 
-        // compare sample vs theoretical statistics
-        printStats(dist, mean, var, skew, kurtosis);
-    }
+            @Override
+            public int dimensionOfRange() {
+                return 1;
+            }
+        };
 
-    private void normal_rng() {
-        RandomLongGenerator uniform = new MersenneTwister();
-        uniform.seed(1234567890L);
+        // the gradient function
+        RealVectorFunction g = new RealVectorFunction() {
 
-        RandomStandardNormalGenerator rng1 = new Zignor2005(uniform); // mean = 0, stdev = 1
-        int N = 1000;
-        double[] arr1 = new double[N];
-        for (int i = 0; i < N; ++i) {
-            arr1[i] = rng1.nextDouble();
-        }
+            @Override
+            public Vector evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+                double x3 = x.get(3);
+                double x4 = x.get(4);
 
-        // check the statistics of the random samples
-        Variance var1 = new Variance(arr1);
-        System.out.println(
-                String.format(
-                        "mean = %f, stdev = %f",
-                        var1.mean(),
-                        var1.standardDeviation()));
+                double[] result = new double[4];
+                result[0] = 4 * pow(x1 - 4 * x2, 3) + 110 * (x1 - 2 * x4);
+                result[1] = -16 * pow(x1 - 4 * x2, 3) + 6 * (x2 - 10 * x3);
+                result[2] = 48 * pow(x3 - x4, 3) - 60 * (x2 - 10 * x3);
+                result[3] = -48 * pow(x3 - x4, 3) - 220 * (x1 - 2 * x4);
+                return new DenseVector(result);
+            }
 
-        NormalRNG rng2 = new NormalRNG(1., 2., rng1); // mean = 1, stdev = 2
-        double[] arr2 = new double[N];
-        for (int i = 0; i < N; ++i) {
-            arr2[i] = rng2.nextDouble();
-        }
+            @Override
+            public int dimensionOfDomain() {
+                return 4;
+            }
 
-        // check the statistics of the random samples
-        Variance var2 = new Variance(arr2);
-        System.out.println(
-                String.format(
-                        "mean = %f, stdev = %f",
-                        var2.mean(),
-                        var2.standardDeviation()));
-    }
+            @Override
+            public int dimensionOfRange() {
+                return 4;
+            }
+        };
 
-    private void MT19937() {
-        RandomLongGenerator rng = new MersenneTwister();
-
-        long startTime = System.nanoTime();
-        int N = 1_000_000;
-        for (int i = 0; i < N; ++i) {
-            rng.nextDouble();
-        }
-        long endTime = System.nanoTime();
-
-        long duration = (endTime - startTime);
-        double ms = (double) duration / 1_000_000.; // divide by 1000000 to get milliseconds
-        System.out.println(String.format("took MT19937 %f milliseconds to generate %d random numbers", ms, N));
-    }
-
-    private void lcgs() {
-        System.out.println("generate randome numbers using an Lehmer RNG:");
-        RandomLongGenerator rng1 = new Lehmer();
-        rng1.seed(1234567890L);
-        generateIntAndPrint(rng1, 10);
-        double[] arr = generate(rng1, 10);
-        print(arr);
-
-        System.out.println("generate randome numbers using an LEcuyer RNG:");
-        RandomLongGenerator rng2 = new LEcuyer();
-        rng2.seed(1234567890L);
-        generateIntAndPrint(rng2, 10);
-        arr = generate(rng2, 10);
-        print(arr);
-
-        System.out.println("generate randome numbers using a composite LCG:");
-        RandomLongGenerator rng3
-                = new CompositeLinearCongruentialGenerator(
-                        new LinearCongruentialGenerator[]{
-                            (LinearCongruentialGenerator) rng1,
-                            (LinearCongruentialGenerator) rng2
-                        }
+        C2OptimProblem problem = new C2OptimProblemImpl(f, g); // only gradient information
+        SteepestDescentMinimizer firstOrderMinimizer
+                = new FirstOrderMinimizer(
+                        FirstOrderMinimizer.Method.IN_EXACT_LINE_SEARCH, // FirstOrderMinimizer.Method.ANALYTIC
+                        1e-8,
+                        40000
                 );
-        rng3.seed(1234567890L);
-        generateIntAndPrint(rng3, 10);
-        arr = generate(rng3, 10);
-        print(arr);
+        IterativeSolution<Vector> soln = firstOrderMinimizer.solve(problem);
+
+        Vector xmin = soln.search(new DenseVector(new double[]{1, -1, -1, 1}));
+        double f_xmin = f.evaluate(xmin);
+        System.out.println(String.format("f(%s) = %f", xmin.toString(), f_xmin));
     }
 
-    private static double[] generate(RandomNumberGenerator rng, int n) {
-        double[] arr = new double[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = rng.nextDouble();
-        }
-        return arr;
+    public void solve_by_Newton_Raphson() throws Exception {
+        System.out.println("solve multivariate function by Newton-Raphson");
+
+        // the objective function
+        // the global minimizer is at x = [0,0,0,0]
+        RealScalarFunction f = new RealScalarFunction() {
+
+            @Override
+            public Double evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+                double x3 = x.get(3);
+                double x4 = x.get(4);
+
+                double result = pow(x1 - 4 * x2, 4);
+                result += 12 * pow(x3 - x4, 4);
+                result += 3 * pow(x2 - 10 * x3, 2);
+                result += 55 * pow(x1 - 2 * x4, 2);
+
+                return result;
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 4;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 1;
+            }
+        };
+
+        // the gradient function
+        RealVectorFunction g = new RealVectorFunction() {
+
+            @Override
+            public Vector evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+                double x3 = x.get(3);
+                double x4 = x.get(4);
+
+                double[] result = new double[4];
+                result[0] = 4 * pow(x1 - 4 * x2, 3) + 110 * (x1 - 2 * x4);
+                result[1] = -16 * pow(x1 - 4 * x2, 3) + 6 * (x2 - 10 * x3);
+                result[2] = 48 * pow(x3 - x4, 3) - 60 * (x2 - 10 * x3);
+                result[3] = -48 * pow(x3 - x4, 3) - 220 * (x1 - 2 * x4);
+                return new DenseVector(result);
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 4;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 4;
+            }
+        };
+
+        C2OptimProblem problem = new C2OptimProblemImpl(f, g); // use numerical Hessian
+        SteepestDescentMinimizer newtonRaphsonMinimizer
+                = new NewtonRaphsonMinimizer(
+                        1e-8,
+                        20
+                );
+        IterativeSolution<Vector> soln = newtonRaphsonMinimizer.solve(problem);
+
+        Vector xmin = soln.search(new DenseVector(new double[]{1, -1, -1, 1}));
+        double f_xmin = f.evaluate(xmin);
+        System.out.println(String.format("f(%s) = %f", xmin.toString(), f_xmin));
     }
 
-    private static void print(double[] arr) {
-        System.out.println(Arrays.toString(arr));
+    public void solve_by_Gauss_Newton() throws Exception {
+        System.out.println("solve multivariate function by Gauss-Newton");
+
+        // the objective function
+        //  the global minimizer is at x = [0,0,0,0]
+        RealVectorFunction f = new RealVectorFunction() {
+
+            @Override
+            public Vector evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+                double x3 = x.get(3);
+                double x4 = x.get(4);
+
+                double[] fx = new double[4];
+                fx[0] = pow(x1 - 4 * x2, 2);
+                fx[1] = sqrt(12) * pow(x3 - x4, 2);
+                fx[2] = sqrt(3) * (x2 - 10 * x3);
+                fx[3] = sqrt(55) * (x1 - 2 * x4);
+
+                return new DenseVector(fx);
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 4;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 4;
+            }
+        };
+
+        // the Jacobian
+        RntoMatrix J = new RntoMatrix() {
+
+            @Override
+            public Matrix evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+                double x3 = x.get(3);
+                double x4 = x.get(4);
+
+                Matrix Jx = new DenseMatrix(4, 4);
+
+                double value = 2 * (x1 - 4 * x2);
+                Jx.set(1, 1, value);
+
+                value = -8 * (x1 - 4 * x2);
+                Jx.set(1, 2, value);
+
+                value = 2 * sqrt(12) * (x3 - x4);
+                Jx.set(2, 3, value);
+                Jx.set(2, 4, -value);
+
+                Jx.set(3, 2, sqrt(3));
+                Jx.set(3, 3, -10 * sqrt(3));
+
+                Jx.set(4, 1, sqrt(55));
+                Jx.set(4, 4, -2 * sqrt(55));
+
+                return Jx;
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 4;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 1;
+            }
+        };
+
+        GaussNewtonMinimizer optim1 = new GaussNewtonMinimizer(1e-8, 10);
+
+        IterativeSolution<Vector> soln = optim1.solve(f, J);//analytical gradient
+
+        Vector xmin = soln.search(new DenseVector(new double[]{1, -1, -1, 1}));
+        System.out.println(String.format("f(%s) = %s", xmin.toString(), f.evaluate(xmin).toString()));
     }
 
-    private static void generateIntAndPrint(RandomNumberGenerator rng, int n) {
-        double[] randomNumbers = new double[n];
-        for (int i = 0; i < n; i++) {
-            randomNumbers[i] = rng.nextDouble();
-        }
-        System.out.println(Arrays.toString(randomNumbers));
+    public void solve_by_conjugate_direction_methods() throws Exception {
+        System.out.println("solve multivariate function by conjugate-direction methods");
+
+        /**
+         * The Himmelblau function: f(x) = (x1^2 + x2 - 11)^2 + (x1 + x2^2 -
+         * 7)^2
+         */
+        RealScalarFunction f = new RealScalarFunction() {
+            @Override
+            public Double evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+
+                double result = pow(x1 * x1 + x2 - 11, 2);
+                result += pow(x1 + x2 * x2 - 7, 2);
+
+                return result;
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 2;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 1;
+            }
+        };
+
+        RealVectorFunction g = new RealVectorFunction() {
+            @Override
+            public Vector evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+
+                double w1 = x1 * x1 + x2 - 11;
+                double w2 = x1 + x2 * x2 - 7;
+
+                double[] result = new double[2];
+                result[0] = 4 * w1 * x1 + 2 * w2;
+                result[1] = 2 * w1 + 4 * w2 * x2;
+                return new DenseVector(result);
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 2;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 2;
+            }
+        };
+        C2OptimProblemImpl problem = new C2OptimProblemImpl(f, g);
+
+        ConjugateGradientMinimizer ConjugateGradientMinimizer
+                = new ConjugateGradientMinimizer(1e-16, 40);
+        IterativeSolution<Vector> soln1 = ConjugateGradientMinimizer.solve(problem);
+        Vector xmin1 = soln1.search(new DenseVector(new double[]{6, 6}));
+        double f_xmin1 = f.evaluate(xmin1);
+        System.out.println(String.format("f(%s) = %.16f", xmin1.toString(), f_xmin1));
+
+        ConjugateGradientMinimizer fletcherReevesMinimizer
+                = new FletcherReevesMinimizer(1e-16, 20);
+        IterativeSolution<Vector> soln2 = fletcherReevesMinimizer.solve(problem);
+        Vector xmin2 = soln2.search(new DenseVector(new double[]{6, 6}));
+        double f_xmin2 = f.evaluate(xmin2);
+        System.out.println(String.format("f(%s) = %.16f", xmin2.toString(), f_xmin2));
+
+        SteepestDescentMinimizer powellMinimizer
+                = new PowellMinimizer(1e-16, 20);
+        IterativeSolution<Vector> soln3 = powellMinimizer.solve(problem);
+        Vector xmin3 = soln3.search(new DenseVector(new double[]{6, 6}));
+        double f_xmin3 = f.evaluate(xmin3);
+        System.out.println(String.format("f(%s) = %.16f", xmin3.toString(), f_xmin3));
+
+        SteepestDescentMinimizer zangwillMinimizer
+                = new ZangwillMinimizer(1e-16, 1e-16, 20);
+        IterativeSolution<Vector> soln4 = zangwillMinimizer.solve(problem);
+        Vector xmin4 = soln4.search(new DenseVector(new double[]{6, 6}));
+        double f_xmin4 = f.evaluate(xmin4);
+        System.out.println(String.format("f(%s) = %.16f", xmin4.toString(), f_xmin4));
     }
 
-    private void printStats(
-            ProbabilityDistribution dist,
-            Mean mean,
-            Variance var,
-            Skewness skew,
-            Kurtosis kurtosis
-    ) {
-        System.out.println(
-                String.format("theoretical mean = %f, sample mean = %f",
-                        dist.mean(),
-                        mean.value()));
-        System.out.println(
-                String.format("theoretical var = %f, sample var = %f",
-                        dist.variance(),
-                        var.value()));
-        System.out.println(
-                String.format("theoretical skew = %f, sample skew = %f",
-                        dist.skew(),
-                        skew.value()));
-        System.out.println(
-                String.format("theoretical kurtosis = %f, sample kurtosis = %f",
-                        dist.kurtosis(),
-                        kurtosis.value()));
+    public void solve_by_quasi_Newton() throws Exception {
+        System.out.println("solve multivariate function by quasi-Newton");
+
+        /**
+         * The Himmelblau function: f(x) = (x1^2 + x2 - 11)^2 + (x1 + x2^2 -
+         * 7)^2
+         */
+        RealScalarFunction f = new RealScalarFunction() {
+            @Override
+            public Double evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+
+                double result = pow(x1 * x1 + x2 - 11, 2);
+                result += pow(x1 + x2 * x2 - 7, 2);
+
+                return result;
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 2;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 1;
+            }
+        };
+
+        RealVectorFunction g = new RealVectorFunction() {
+            @Override
+            public Vector evaluate(Vector x) {
+                double x1 = x.get(1);
+                double x2 = x.get(2);
+
+                double w1 = x1 * x1 + x2 - 11;
+                double w2 = x1 + x2 * x2 - 7;
+
+                double[] result = new double[2];
+                result[0] = 4 * w1 * x1 + 2 * w2;
+                result[1] = 2 * w1 + 4 * w2 * x2;
+                return new DenseVector(result);
+            }
+
+            @Override
+            public int dimensionOfDomain() {
+                return 2;
+            }
+
+            @Override
+            public int dimensionOfRange() {
+                return 2;
+            }
+        };
+        C2OptimProblemImpl problem = new C2OptimProblemImpl(f, g);
+
+        QuasiNewtonMinimizer rankOneMinimizer = new RankOneMinimizer(1e-16, 15);
+        IterativeSolution<Vector> soln1 = rankOneMinimizer.solve(problem);
+        Vector xmin = soln1.search(new DenseVector(new double[]{6, 6}));
+        double f_xmin = f.evaluate(xmin);
+        System.out.println(String.format("f(%s) = %.16f", xmin.toString(), f_xmin));
+
+        QuasiNewtonMinimizer dfpMinimizer = new DFPMinimizer(1e-16, 15);
+        IterativeSolution<Vector> soln2 = dfpMinimizer.solve(problem);
+        xmin = soln2.search(new DenseVector(new double[]{6, 6}));
+        f_xmin = f.evaluate(xmin);
+        System.out.println(String.format("f(%s) = %.16f", xmin.toString(), f_xmin));
+
+        QuasiNewtonMinimizer bfgsMinimizer = new BFGSMinimizer(false, 1e-16, 15);
+        IterativeSolution<Vector> soln3 = bfgsMinimizer.solve(problem);
+        xmin = soln3.search(new DenseVector(new double[]{6, 6}));
+        f_xmin = f.evaluate(xmin);
+        System.out.println(String.format("f(%s) = %.16f", xmin.toString(), f_xmin));
+
+        QuasiNewtonMinimizer huangMinimizer = new HuangMinimizer(0, 1, 0, 1, 1e-16, 15);
+        IterativeSolution<Vector> soln4 = huangMinimizer.solve(problem);
+        xmin = soln4.search(new DenseVector(new double[]{6, 6}));
+        f_xmin = f.evaluate(xmin);
+        System.out.println(String.format("f(%s) = %.16f", xmin.toString(), f_xmin));
+
+        QuasiNewtonMinimizer pearsonMinimizer = new PearsonMinimizer(1e-16, 15);
+        IterativeSolution<Vector> soln5 = pearsonMinimizer.solve(problem);
+        xmin = soln5.search(new DenseVector(new double[]{6, 6}));
+        f_xmin = f.evaluate(xmin);
+        System.out.println(String.format("f(%s) = %.16f", xmin.toString(), f_xmin));
     }
+
 }

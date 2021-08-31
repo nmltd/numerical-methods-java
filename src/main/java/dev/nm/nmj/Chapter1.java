@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Numerical Method Inc.
- * http://www.numericalmethod.com/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -24,24 +24,33 @@ package dev.nm.nmj;
 
 import dev.nm.algebra.linear.matrix.doubles.Matrix;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
-import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.ConvergenceFailure;
 import dev.nm.algebra.linear.matrix.doubles.operation.Inverse;
 import dev.nm.algebra.linear.vector.doubles.Vector;
 import dev.nm.algebra.linear.vector.doubles.dense.DenseVector;
 
 /**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
  *
  * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
  */
 public class Chapter1 {
 
-    public static void main(String[] args) throws ConvergenceFailure {
+    public static void main(String[] args) {
         System.out.println("Chapter 1 demos");
 
         Chapter1 chapter1 = new Chapter1();
 
-//        chapter1.invert_matrix();
+        chapter1.invert_matrix();
         chapter1.innerProductDemo();
+        chapter1.a_vector();
+    }
+
+    public void a_vector() {
+        Vector v = new DenseVector(1., 2., 3.);
+        System.out.println(v);
     }
 
     public void innerProductDemo() {

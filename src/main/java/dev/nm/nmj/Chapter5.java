@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -50,11 +50,19 @@ import dev.nm.misc.datastructure.MultiDimensionalArray;
 import java.io.File;
 import static java.lang.Math.log;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter5 {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Chapter 5 demos");
-        
+
         Chapter5 chapter5 = new Chapter5();
         chapter5.least_square_curve_fitting();
         chapter5.linear_interpolation();
@@ -315,11 +323,11 @@ public class Chapter5 {
     /**
      * Export sample points to plot a function curve.
      *
-     * @param f          the function to plot
-     * @param nSamples   number of sample points
+     * @param f the function to plot
+     * @param nSamples number of sample points
      * @param rangeStart start of the plotting range
-     * @param rangeEnd   end of the plotting range
-     * @param filename   export file name
+     * @param rangeEnd end of the plotting range
+     * @param filename export file name
      * @throws IOException
      */
     private void plot(
@@ -349,10 +357,10 @@ public class Chapter5 {
     /**
      * Export sample points to plot a bivariate function surface.
      *
-     * @param f        the function to plot
+     * @param f the function to plot
      * @param nSamples number of sample points
-     * @param rangeX   plotting range of x
-     * @param rangeY   plotting range of y
+     * @param rangeX plotting range of x
+     * @param rangeY plotting range of y
      * @param filename export file name
      * @throws IOException
      */

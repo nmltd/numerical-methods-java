@@ -1,6 +1,6 @@
 /*
  * Copyright (c) NM LTD.
- * https://www.nm.dev/
+ * https://nm.dev/
  * 
  * THIS SOFTWARE IS LICENSED, NOT SOLD.
  * 
@@ -82,6 +82,14 @@ import java.io.IOException;
 import static java.lang.Math.log;
 import java.util.Arrays;
 
+/**
+ * Numerical Methods Using Java: For Data Science, Analysis, and Engineering
+ *
+ * @author haksunli
+ * @see
+ * https://www.amazon.com/Numerical-Methods-Using-Java-Engineering/dp/1484267966
+ * https://nm.dev/
+ */
 public class Chapter15 {
 
     public static void main(String[] args) throws Exception {
@@ -610,8 +618,8 @@ public class Chapter15 {
 
     /**
      *
-     * x<-c(0.2,0.3,-0.1,0.4,-0.5,0.6,0.1,0.2)
-     * adf.test(c(x,x),alternative = c("stationary"),4)
+     * x<-c(0.2,0.3,-0.1,0.4,-0.5,0.6,0.1,0.2) adf.test(c(x,x),alternative =
+     * c("stationary"),4)
      *
      * The p-value from R is obtained form the interpolation
      * (0.9-0.1)/(3.24-1.14)=(x-0.1)/(3.24-2.642)
