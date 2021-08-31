@@ -15,7 +15,7 @@
         <license.directory>license</license.directory>
         <netbeans.hint.license>NM</netbeans.hint.license>
         <suanshu.version>4.2.0-SNAPSHOT</suanshu.version>
-        <nmdev.version>1.2.1-SNAPSHOT</nmdev.version>
+        <nmdev.version>1.2.3-SNAPSHOT</nmdev.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
@@ -75,38 +75,11 @@
                     <version>${suanshu.version}</version>
                 </dependency>
         -->
-        <!--
-<dependency>
-    <groupId>dev.nm</groupId>
-    <artifactId>nmdev</artifactId>
-    <version>${nmdev.version}</version>
-</dependency>
-        -->
-        <dependency>
-            <groupId>dev.nm</groupId>
-            <artifactId>basic</artifactId>
-            <version>${nmdev.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.nm</groupId>
-            <artifactId>solver</artifactId>
-            <version>${nmdev.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.nm</groupId>
-            <artifactId>stat</artifactId>
-            <version>${nmdev.version}</version>
-        </dependency>   
-        <dependency>
-            <groupId>dev.nm</groupId>
-            <artifactId>evt</artifactId>
-            <version>${nmdev.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.nm</groupId>
-            <artifactId>opde</artifactId>
-            <version>${nmdev.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>dev.nm</groupId>
+			<artifactId>nmdev</artifactId>
+			<version>${nmdev.version}</version>
+		</dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
