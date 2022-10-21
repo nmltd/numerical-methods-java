@@ -1,0 +1,6 @@
+Steps:
+1. In R, run command:
+> install.packages("rJava");
+2. ADD R_HOME\bin\x64 and rJava_DIR\jri\x64 to the PATH variable in the environment variables (need to restart the IDE to take effect). For example, R_HOME is "C:\Program Files\R\R-2.14.1", rJava_DIR is "C:\Users\**\Documents\R\win-library\2.14\rJava" or "C:\Program Files\R\R-2.14.1\library\rJava".
+3. Use new JRIEngine() to create and start a new instance of R in java
+4. Call JRIEngine.close() to let your application exit. Otherwise, it will hang there.
