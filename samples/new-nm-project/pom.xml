@@ -37,7 +37,7 @@
         <repository>
             <id>numericalmethod-repo</id>
             <name>numericalmethod's Maven Repository</name>
-            <url>http://repo.numericalmethod.dev/maven/</url>
+            <url>http://repo.numericalmethod.com/maven/</url>
             <layout>default</layout>
         </repository> 
     </repositories>
