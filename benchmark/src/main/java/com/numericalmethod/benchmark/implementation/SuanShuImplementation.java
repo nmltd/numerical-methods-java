@@ -34,7 +34,6 @@ import dev.nm.algebra.linear.matrix.doubles.factorization.qr.QR;
 import dev.nm.algebra.linear.matrix.doubles.factorization.svd.SVD;
 import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.LU;
 import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Chol;
-import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Cholesky;
 import dev.nm.algebra.linear.matrix.doubles.linearsystem.LUSolver;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
 import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.triangle.*;
@@ -158,11 +157,11 @@ public class SuanShuImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) throws Exception {
                 SOCPDualProblem problem = new SOCPDualProblem(
-                    vector(arguments[1]), // b
-                    new Matrix[]{matrix(arguments[0])}, // A
-                    new Vector[]{vector(arguments[2])}); // c
-                PrimalDualInteriorPointMinimizer<SOCPDualProblem, IterativeSolution<PrimalDualSolution>> socp
-                    = new PrimalDualInteriorPointMinimizer(1e-6, 100);
+                        vector(arguments[1]), // b
+                        new Matrix[]{matrix(arguments[0])}, // A
+                        new Vector[]{vector(arguments[2])}); // c
+                PrimalDualInteriorPointMinimizer socp
+                        = new PrimalDualInteriorPointMinimizer(1e-6, 100);
                 IterativeSolution<PrimalDualSolution> soln1;
                 soln1 = socp.solve(problem);
                 soln1.search();
@@ -173,11 +172,11 @@ public class SuanShuImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) throws Exception {
                 SOCPDualProblem problem = new SOCPDualProblem(
-                    vector(arguments[1]), // b
-                    new Matrix[]{matrix(arguments[0])}, // A
-                    new Vector[]{vector(arguments[2])}); // c
+                        vector(arguments[1]), // b
+                        new Matrix[]{matrix(arguments[0])}, // A
+                        new Vector[]{vector(arguments[2])}); // c
                 ConstrainedMinimizer<SOCPDualProblem, IterativeSolution<PrimalDualSolution>> socp
-                    = new PrimalDualInteriorPointMinimizer(1e-6, 100);
+                        = new PrimalDualInteriorPointMinimizer(1e-6, 100);
                 IterativeSolution<PrimalDualSolution> soln1;
                 soln1 = socp.solve(problem);
                 soln1.search();
@@ -188,9 +187,9 @@ public class SuanShuImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) throws Exception {
                 SDPDualProblem problem = new SDPDualProblem(
-                    vector(arguments[1]), // b
-                    new SymmetricMatrix(matrix(arguments[2])), // C
-                    new SymmetricMatrix[]{new SymmetricMatrix(matrix(arguments[0]))}); // A[]
+                        vector(arguments[1]), // b
+                        new SymmetricMatrix(matrix(arguments[2])), // C
+                        new SymmetricMatrix[]{new SymmetricMatrix(matrix(arguments[0]))}); // A[]
 
                 PrimalDualPathFollowingMinimizer pdpf = new PrimalDualPathFollowingMinimizer(1e-6);
                 PrimalDualPathFollowingMinimizer.Solution soln = pdpf.solve(problem);
@@ -217,11 +216,11 @@ public class SuanShuImplementation extends AbstractImplementation {
                 if (argument instanceof SparseMatrixArgument) {
                     SparseMatrixArgument sparse = (SparseMatrixArgument) argument;
                     return new CSRSparseMatrix(
-                        sparse.nRows(),
-                        sparse.nCols(),
-                        sparse.getRowIndices(),
-                        sparse.getColumnIndices(),
-                        sparse.getValues());
+                            sparse.nRows(),
+                            sparse.nCols(),
+                            sparse.getRowIndices(),
+                            sparse.getColumnIndices(),
+                            sparse.getValues());
                 }
 
                 if (argument instanceof DenseVectorArgument) {
