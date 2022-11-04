@@ -33,8 +33,8 @@
     <dependencies>
         <dependency>
             <groupId>com.numericalmethod</groupId>
-            <artifactId>suanshu</artifactId>
-            <version>${suanshu.version}</version>
+            <artifactId>dev.nm</artifactId>
+            <version>${nm.version}</version>
         </dependency>
 
         <dependency>
