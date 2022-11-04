@@ -1,0 +1,44 @@
+1) Download and install Python from www.python.org. Choose Python 2.7.2 (32 bit).
+2) Download and install the MinGW Compiler Suite (www.mingw.org).
+	2.1) Download and run the MinGW installer
+	2.2) Install the C compiler, the Fortran compiler, and the MSYS Basic System
+3) Download gnuwin32 from http://gnuwin32.sourceforge.net/ in order to use 'sed' command.
+4) Download and use cygwin NOT cmd for running all commands. (http://cygwin.com/install.html)
+5) Open the Command Prompt and set the path variable with the following command:
+	"set path=%path%;c:\Python27;c:\MinGW\bin;c:\MinGW\msys\1.0\bin"
+6) Download and compile BLAS source (http://www.netlib.org/blas/):
+	6.1) Download the reference BLAS source distribution.
+	6.2) In the Command Prompt, change to the directory containing blas.tgz.
+	6.3) Run the following commands to unpack and compile reference BLAS:
+			tar -xvf blas.tgz
+			cd BLAS
+			sed 's/_LINUX/_WIN/' make.inc -i
+			make && cp blas_WIN.a ../libblas.a
+			cd ..
+7) Download and compile LAPACK source (http://www.netlib.org/lapack/lapack-3.4.0.tgz):
+	7.1) Download the LAPACK source distribution.
+	7.2) In the Command Prompt, change to directory containing lapack-3.4.0.tgz.
+	7.3) Run the following commands to unpack and compile LAPACK:
+			tar -xvf lapack-3.4.0.tgz
+			cd lapack-3.4.0
+			cp make.inc.example make.inc
+			make lapacklib && cp liblapack.a ..
+8) Download and compile CVXOPT source (http://abel.ee.ucla.edu/cvxopt/download/):
+	8.1) Download the CVXOPT source distribution.
+	8.2) In the Command Prompt, change to the directory containing the CVXOPT source distribution.
+	8.3) Unpack the source distribution and change the directory to cvxopt-1.1.5/src:
+			tar -xvf cvxopt-1.1.5.tar.gz
+			cd cvxopt-1.1.5/src
+	8.4) Copy libblas.a and liblapack.a to the src directory.
+	8.5) Edit setup.py:
+		8.5.1) set the variable BLAS_LIB in setup.py to BLAS_LIB = [‘blas’,’gfortran’]
+		8.5.2) set the variable BLAS_LIB_DIR in setup.py to BLAS_LIB_DIR = ‘.’
+	8.6) Remove all instances of ‘-mno-cygwin’ from c:\Python27\Lib\distutils\cygwinccompiler.py using the command:
+			's/-mno-cygwin//g' -i'.bak' "c:\Python27\Lib\distutils\cygwinccompiler.py"
+	8.7) Run the following commands to build and install CVXOPT:
+			python setup.py build --compiler=mingw32
+		python setup.py install
+	8.8) Restore c:\Python27\Lib\distutils\cygwinccompiler.py with the following command:
+			mv "c:\Python27\Lib\distutils\cygwinccompiler.py.bak" "c:\Python27\Lib\distutils\cygwinccompiler.py"
+
+
