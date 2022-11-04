@@ -25,9 +25,9 @@ package com.numericalmethod.benchmark;
 import com.numericalmethod.benchmark.time.StopWatch;
 import com.numericalmethod.benchmark.time.formatter.MillisFormatter;
 import com.numericalmethod.benchmark.time.formatter.PeriodFormatter;
-import com.numericalmethod.suanshu.number.DoubleUtils;
-import com.numericalmethod.suanshu.stats.descriptive.moment.Mean;
-import com.numericalmethod.suanshu.stats.descriptive.moment.Variance;
+import dev.nm.number.DoubleUtils;
+import dev.nm.stat.descriptive.moment.Mean;
+import dev.nm.stat.descriptive.moment.Variance;
 import java.util.List;
 
 /**

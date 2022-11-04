@@ -15,7 +15,7 @@
         <license.directory>license</license.directory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <suanshu.version>3.3.0</suanshu.version>
+        <nmdev.version>1.2.3-SNAPSHOT</nmdev.version>
         <main.class>com.numericalmethod.benchmark.main.Main</main.class>
         <run.count>30</run.count>
         <detail.mode>true</detail.mode>
@@ -23,20 +23,27 @@
 
     <repositories>
         <repository>
-            <id>nm-repo</id>
-            <name>Numerical Method's Maven Repository</name>
+            <id>numericalmethod-repo</id>
+            <name>numericalmethod's Maven Repository</name>
             <url>http://repo.numericalmethod.com/maven/</url>
             <layout>default</layout>
-        </repository>
+        </repository> 
     </repositories>
 
+	
     <dependencies>
         <dependency>
-            <groupId>com.numericalmethod</groupId>
-            <artifactId>dev.nm</artifactId>
-            <version>${nm.version}</version>
+            <groupId>dev.nm</groupId>
+            <artifactId>nmdev</artifactId>
+            <version>${nmdev.version}</version>
         </dependency>
-
+	
+	<dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+	
         <dependency>
             <groupId>colt</groupId>
             <artifactId>colt</artifactId>

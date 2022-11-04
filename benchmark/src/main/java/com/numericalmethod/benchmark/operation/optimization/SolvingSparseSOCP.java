@@ -26,15 +26,15 @@ import com.numericalmethod.benchmark.implementation.datatype.Argument;
 import static com.numericalmethod.benchmark.implementation.datatype.Arguments.sparse;
 import static com.numericalmethod.benchmark.implementation.datatype.Arguments.vector;
 import com.numericalmethod.benchmark.operation.BenchmarkOperation;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.Matrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.CSRSparseMatrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.SparseMatrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.operation.MatrixFactory;
-import com.numericalmethod.suanshu.algebra.linear.vector.doubles.Vector;
-import com.numericalmethod.suanshu.algebra.linear.vector.doubles.dense.DenseVector;
-import com.numericalmethod.suanshu.stats.random.rng.univariate.RandomLongGenerator;
-import com.numericalmethod.suanshu.stats.random.rng.univariate.RandomNumberGenerator;
-import com.numericalmethod.suanshu.stats.random.rng.univariate.uniform.UniformRNG;
+import dev.nm.algebra.linear.matrix.doubles.Matrix;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.CSRSparseMatrix;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.SparseMatrix;
+import dev.nm.algebra.linear.matrix.doubles.operation.MatrixFactory;
+import dev.nm.algebra.linear.vector.doubles.Vector;
+import dev.nm.algebra.linear.vector.doubles.dense.DenseVector;
+import dev.nm.stat.random.rng.univariate.RandomLongGenerator;
+import dev.nm.stat.random.rng.univariate.RandomNumberGenerator;
+import dev.nm.stat.random.rng.univariate.uniform.UniformRNG;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class SolvingSparseSOCP implements BenchmarkOperation {
         Vector b = A.multiply(x); // b=Ax
         Vector c = A.t().multiply(y).add(s); // c=Aty+c
         List<Argument> matrices = new ArrayList<Argument>();
-        List<SparseMatrix.Entry> entrylist = A.getEntrytList();
+        List<SparseMatrix.Entry> entrylist = A.getEntryList();
         int[] rowIndex = new int[entrylist.size()];
         int[] colIndex = new int[entrylist.size()];
         double[] values = new double[entrylist.size()];

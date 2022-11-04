@@ -28,29 +28,30 @@ import com.numericalmethod.benchmark.implementation.datatype.*;
 import com.numericalmethod.benchmark.implementation.library.LibraryInfo;
 import com.numericalmethod.benchmark.operation.linearalgebra.*;
 import com.numericalmethod.benchmark.operation.optimization.*;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.Matrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.eigen.EigenDecomposition;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.qr.QR;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.svd.SVD;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle.LU;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Chol;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Cholesky;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.linearsystem.LUSolver;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.dense.triangle.*;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.CSRSparseMatrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.operation.Inverse;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.operation.MatrixMeasure;
-import com.numericalmethod.suanshu.algebra.linear.vector.doubles.Vector;
-import com.numericalmethod.suanshu.algebra.linear.vector.doubles.dense.DenseVector;
-import com.numericalmethod.suanshu.optimization.IterativeSolution;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.ConstrainedMinimizer;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.pathfollowing.CentralPath;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.pathfollowing.PrimalDualPathFollowingMinimizer;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.problem.SDPDualProblem;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualInteriorPointMinimizer;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualSolution;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.socp.problem.SOCPDualProblem;
+import dev.nm.algebra.linear.matrix.doubles.Matrix;
+import dev.nm.algebra.linear.matrix.doubles.factorization.eigen.EigenDecomposition;
+import dev.nm.algebra.linear.matrix.doubles.factorization.qr.QR;
+import dev.nm.algebra.linear.matrix.doubles.factorization.svd.SVD;
+import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.LU;
+import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Chol;
+import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Cholesky;
+import dev.nm.algebra.linear.matrix.doubles.linearsystem.LUSolver;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.triangle.*;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.CSRSparseMatrix;
+import dev.nm.algebra.linear.matrix.doubles.operation.Inverse;
+import dev.nm.algebra.linear.matrix.doubles.operation.MatrixMeasure;
+import dev.nm.algebra.linear.vector.doubles.Vector;
+import dev.nm.algebra.linear.vector.doubles.dense.DenseVector;
+import dev.nm.solver.IterativeSolution;
+import dev.nm.solver.multivariate.constrained.ConstrainedMinimizer;
+//import dev.nm.solver.multivariate.constrained.SubProblemMinimizer;
+import dev.nm.solver.multivariate.constrained.convex.sdp.pathfollowing.CentralPath;
+import dev.nm.solver.multivariate.constrained.convex.sdp.pathfollowing.PrimalDualPathFollowingMinimizer;
+import dev.nm.solver.multivariate.constrained.convex.sdp.problem.SDPDualProblem;
+import dev.nm.solver.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualInteriorPointMinimizer;
+import dev.nm.solver.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualSolution;
+import dev.nm.solver.multivariate.constrained.convex.sdp.socp.problem.SOCPDualProblem;
 
 /**
  *
@@ -63,7 +64,7 @@ public class SuanShuImplementation extends AbstractImplementation {
         addExecutable(CholeskyDecomposition.class, new AbstractExecutable() {
             @Override
             public void execute(Object[] arguments) {
-                Cholesky chol = new Chol(matrix(arguments[0]));
+                Chol chol = new Chol(matrix(arguments[0]));
                 Object L = chol.L();
             }
         });
@@ -160,7 +161,7 @@ public class SuanShuImplementation extends AbstractImplementation {
                     vector(arguments[1]), // b
                     new Matrix[]{matrix(arguments[0])}, // A
                     new Vector[]{vector(arguments[2])}); // c
-                ConstrainedMinimizer<SOCPDualProblem, IterativeSolution<PrimalDualSolution>> socp
+                PrimalDualInteriorPointMinimizer<SOCPDualProblem, IterativeSolution<PrimalDualSolution>> socp
                     = new PrimalDualInteriorPointMinimizer(1e-6, 100);
                 IterativeSolution<PrimalDualSolution> soln1;
                 soln1 = socp.solve(problem);
