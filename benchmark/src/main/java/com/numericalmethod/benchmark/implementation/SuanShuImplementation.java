@@ -162,7 +162,7 @@ public class SuanShuImplementation extends AbstractImplementation {
                         new Vector[]{vector(arguments[2])}); // c
                 PrimalDualInteriorPointMinimizer socp
                         = new PrimalDualInteriorPointMinimizer(1e-6, 100);
-                IterativeSolution<PrimalDualSolution> soln1;
+                PrimalDualInteriorPointMinimizer.Solution soln1;
                 soln1 = socp.solve(problem);
                 soln1.search();
                 Vector z = soln1.minimizer().y;
@@ -175,9 +175,9 @@ public class SuanShuImplementation extends AbstractImplementation {
                         vector(arguments[1]), // b
                         new Matrix[]{matrix(arguments[0])}, // A
                         new Vector[]{vector(arguments[2])}); // c
-                ConstrainedMinimizer<SOCPDualProblem, IterativeSolution<PrimalDualSolution>> socp
+                PrimalDualInteriorPointMinimizer socp
                         = new PrimalDualInteriorPointMinimizer(1e-6, 100);
-                IterativeSolution<PrimalDualSolution> soln1;
+                PrimalDualInteriorPointMinimizer.Solution soln1;
                 soln1 = socp.solve(problem);
                 soln1.search();
                 Vector z = soln1.minimizer().y;
