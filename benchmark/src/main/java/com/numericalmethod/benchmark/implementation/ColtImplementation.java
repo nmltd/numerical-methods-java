@@ -21,9 +21,9 @@
  * ARISING AS A RESULT OF USING OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package com.numericalmethod.benchmark.implementation;
-
-import cern.colt.function.DoubleDoubleFunction;
 import cern.colt.function.DoubleFunction;
+import cern.colt.function.DoubleDoubleFunction;
+import cern.jet.math.Functions;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
@@ -39,7 +39,19 @@ import com.numericalmethod.benchmark.operation.linearalgebra.*;
  *
  * @author Ken Yiu
  */
+class my_class implements DoubleFunction {
+    double sca;
+    public my_class(double s)
+    {sca = s;}
+    @Override
+    public double apply(double d){
+        return sca * d;
+    }
+}
+
 public class ColtImplementation extends AbstractImplementation {
+
+    
 
     public ColtImplementation() {
         addExecutable(CholeskyDecomposition.class, new AbstractExecutable() {
@@ -74,12 +86,8 @@ public class ColtImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) {
                 DoubleMatrix2D C = matrix(arguments[0]).copy();
-                C.assign(matrix(arguments[1]), new DoubleDoubleFunction() {
-                    @Override
-                    public double apply(double x, double y) {
-                        return x + y;
-                    }
-                });
+                // Functions ff = Functions.functions;
+                C.assign(matrix(arguments[1]), Functions.plus);
             }
         });
         addExecutable(MatrixDeterminant.class, new AbstractExecutable() {
@@ -113,16 +121,19 @@ public class ColtImplementation extends AbstractImplementation {
                 DoubleMatrix2D C = coltAlgebra.mult(matrix(arguments[0]), matrix(arguments[1]));
             }
         });
+
         addExecutable(MatrixScale.class, new AbstractExecutable() {
             @Override
             public void execute(Object[] arguments) {
                 DoubleMatrix2D B = matrix(arguments[0]).copy();
-                B.assign(new DoubleFunction() {
-                    @Override
-                    public double apply(double d) {
-                        return MatrixScale.SCALAR * d;
-                    }
-                });
+                DoubleFunction my_obj = new my_class(MatrixScale.SCALAR);
+                B.assign(my_obj);
+                // B.assign(Functions.abs {
+                //     @Override
+                //     public double apply(double d) {
+                //         return MatrixScale.SCALAR * d;
+                //     }
+                // });
             }
         });
         addExecutable(MatrixTranspose.class, new AbstractExecutable() {
