@@ -126,11 +126,7 @@ public class ColtImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) {
                 DoubleMatrix2D B = matrix(arguments[0]).copy();
-<<<<<<< Updated upstream
                 DoubleFunction my_obj = new my_class(MatrixScale.SCALAR);
-=======
-                my_class my_obj = new my_class(MatrixScale.SCALAR);
->>>>>>> Stashed changes
                 B.assign(my_obj);
                 // B.assign(Functions.abs {
                 //     @Override
