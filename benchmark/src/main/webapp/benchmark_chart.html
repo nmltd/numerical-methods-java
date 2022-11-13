@@ -18,8 +18,8 @@
     <body>
         <div class="container" ng-controller="BenchmarkController">
             <div class="jumbotron">
-                <h1>SuanShu is so fast!</h1>      
-                <p>This page shows the benchmark results for SuanShu (compared with other free libraries).</p>
+                <h1>NM Dev is so fast!</h1>      
+                <p>This page shows the benchmark results for NM Dev (compared with other free libraries).</p>
                 <div class="well-sm">
                     <span class="glyphicon glyphicon-bell"></span> The source code of this benchmark program is available 
                     <a href="http://redmine.numericalmethod.com/projects/public/repository/show/benchmark" target="_blank">here</a>.
@@ -41,14 +41,12 @@
                 <div class="col-md-3">
                     <ul id="menu" class="nav nav-pills nav-stacked">
                         <li ng-cloak ng-repeat="plot in plots" ng-class="{'active': isActive($index)}">
-                            <a ng-click="activate($index)"
-                               data-toggle="tab" href="#{{plot.id}}">{{plot.title| uppercase}}</a>
+                            <a ng-click="activate($index)" data-toggle="tab" href="#{{plot.id}}">{{plot.title| uppercase}}</a>
                         </li>
                     </ul>
                 </div>
                 <div id="plots" class="col-md-9 tab-content">
-                    <div id="{{plot.id}}" class="tab-pane fade" ng-repeat="plot in plots"
-                         ng-class="{'in': isActive($index), 'active': isActive($index)}">
+                    <div id="{{plot.id}}" class="tab-pane fade" ng-repeat="plot in plots" ng-class="{'in': isActive($index), 'active': isActive($index)}">
                         <benchmark-chart plot="{{plot}}"></benchmark-chart>
                     </div>
                     <benchmark-notes></benchmark-notes>

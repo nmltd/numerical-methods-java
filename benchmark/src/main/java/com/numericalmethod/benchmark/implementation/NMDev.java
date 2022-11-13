@@ -56,9 +56,9 @@ import dev.nm.solver.multivariate.constrained.convex.sdp.socp.problem.SOCPDualPr
  *
  * @author Ken Yiu
  */
-public class SuanShuImplementation extends AbstractImplementation {
+public class NMDev extends AbstractImplementation {
 
-    public SuanShuImplementation() {
+    public NMDev() {
 
         addExecutable(CholeskyDecomposition.class, new AbstractExecutable() {
             @Override
@@ -200,7 +200,7 @@ public class SuanShuImplementation extends AbstractImplementation {
 
     @Override
     public LibraryInfo getLibraryInfo() {
-        return new LibraryInfo("suanshu", "3.3.0");
+        return new LibraryInfo("NM-Dev", "1.2.3");
     }
 
     @Override

@@ -1,9 +1,0 @@
-operation,suanshu-3.0.0,R-2.14
-"solving SOCP (200 variables, 400 constraints)",1.0,7.915654520917679
-"solving SOCP (400 variables, 800 constraints)",1.0,14.251435666614931
-"solving SOCP (800 variables, 1600 constraints)",1.0,23.497632271265708
-"solving sparse SOCP (200 variables, 400 constraints)",1.0,0.9803750545137374
-"solving sparse SOCP (400 variables, 800 constraints)",1.0,0.5385805453490621
-"solving sparse SOCP (800 variables, 1600 constraints)",1.0,1.982569511500656
-"solving SDP (20 variables, 1 constraints)",1.0,0.008138351983723296
-"solving SDP (40 variables, 1 constraints)",1.0,2.45728420949167E-4

@@ -33,7 +33,7 @@ import com.numericalmethod.benchmark.implementation.MtjImplementation;
 import com.numericalmethod.benchmark.implementation.OjalgoImplementation;
 import com.numericalmethod.benchmark.implementation.ParallelColtImplementation;
 import com.numericalmethod.benchmark.implementation.RImplementation;
-import com.numericalmethod.benchmark.implementation.SuanShuImplementation;
+import com.numericalmethod.benchmark.implementation.NMDev;
 import com.numericalmethod.benchmark.implementation.UjmpImplementation;
 import com.numericalmethod.benchmark.implementation.library.LibraryImplementation;
 
@@ -43,7 +43,7 @@ import com.numericalmethod.benchmark.implementation.library.LibraryImplementatio
  */
 public enum EvaluatedLinearAlgebraLibrary implements LibraryImplementation {
 
-    SUANSHU(new SuanShuImplementation()),
+    SUANSHU(new NMDev()),
     //    R(new RImplementation()),
     APACHE_COMMONS(new ApacheCommonsImplementation()),
     COLT(new ColtImplementation()),

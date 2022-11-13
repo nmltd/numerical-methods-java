@@ -24,7 +24,7 @@ package com.numericalmethod.benchmark.main;
 
 import com.numericalmethod.benchmark.implementation.Implementation;
 import com.numericalmethod.benchmark.implementation.RImplementation;
-import com.numericalmethod.benchmark.implementation.SuanShuImplementation;
+import com.numericalmethod.benchmark.implementation.NMDev;
 import com.numericalmethod.benchmark.implementation.library.LibraryImplementation;
 
 /**
@@ -33,7 +33,7 @@ import com.numericalmethod.benchmark.implementation.library.LibraryImplementatio
  */
 public enum EvaluatedOptimizationLibrary implements LibraryImplementation {
 
-    SUANSHU(new SuanShuImplementation()),
+    SUANSHU(new NMDev()),
 //    R(new RImplementation())
     ;
     private final Implementation implementation;
