@@ -15,7 +15,7 @@
                 };
 
                 $scope.isActive = function (indx) {
-                    return $scope.activeTab === indx; 
+                    return $scope.activeTab === indx;
                 };
             })
 
@@ -204,13 +204,13 @@
     /*
      * Load Google visualization library, before bootstrapping angular apps.
      */
+    console.log('loading google visualization library ...');
+    google.load('visualization', '1', {packages: ['corechart', 'bar']});
     google.setOnLoadCallback(function () {
 
         angular.bootstrap(document, ['benchmarkApp']);
 
     });
 
-    console.log('loading google visualization library ...');
-    google.load('visualization', '1', {packages: ['corechart', 'bar']});
-
 })();
+
