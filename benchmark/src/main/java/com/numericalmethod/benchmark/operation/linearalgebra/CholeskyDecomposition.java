@@ -25,12 +25,12 @@ package com.numericalmethod.benchmark.operation.linearalgebra;
 import com.numericalmethod.benchmark.implementation.datatype.Argument;
 import static com.numericalmethod.benchmark.implementation.datatype.Arguments.dense;
 import com.numericalmethod.benchmark.operation.BenchmarkOperation;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.Matrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.dense.triangle.SymmetricMatrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.operation.MatrixFactory;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.operation.MatrixUtils;
-import com.numericalmethod.suanshu.stats.random.rng.univariate.RandomNumberGenerator;
-import com.numericalmethod.suanshu.stats.random.rng.univariate.uniform.UniformRNG;
+import dev.nm.algebra.linear.matrix.doubles.Matrix;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.triangle.SymmetricMatrix;
+import dev.nm.algebra.linear.matrix.doubles.operation.MatrixFactory;
+import dev.nm.algebra.linear.matrix.doubles.operation.MatrixUtils;
+import dev.nm.stat.random.rng.univariate.RandomNumberGenerator;
+import dev.nm.stat.random.rng.univariate.uniform.UniformRNG;
 import java.util.ArrayList;
 import java.util.List;
 

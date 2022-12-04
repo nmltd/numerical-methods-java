@@ -28,42 +28,39 @@ import com.numericalmethod.benchmark.implementation.datatype.*;
 import com.numericalmethod.benchmark.implementation.library.LibraryInfo;
 import com.numericalmethod.benchmark.operation.linearalgebra.*;
 import com.numericalmethod.benchmark.operation.optimization.*;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.Matrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.eigen.EigenDecomposition;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.qr.QR;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.svd.SVD;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle.LU;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Chol;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Cholesky;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.linearsystem.LUSolver;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.dense.triangle.*;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.CSRSparseMatrix;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.operation.Inverse;
-import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.operation.MatrixMeasure;
-import com.numericalmethod.suanshu.algebra.linear.vector.doubles.Vector;
-import com.numericalmethod.suanshu.algebra.linear.vector.doubles.dense.DenseVector;
-import com.numericalmethod.suanshu.optimization.IterativeSolution;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.ConstrainedMinimizer;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.pathfollowing.CentralPath;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.pathfollowing.PrimalDualPathFollowingMinimizer;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.problem.SDPDualProblem;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualInteriorPointMinimizer;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualSolution;
-import com.numericalmethod.suanshu.optimization.multivariate.constrained.convex.sdp.socp.problem.SOCPDualProblem;
+import dev.nm.algebra.linear.matrix.doubles.Matrix;
+import dev.nm.algebra.linear.matrix.doubles.factorization.eigen.EigenDecomposition;
+import dev.nm.algebra.linear.matrix.doubles.factorization.qr.QR;
+import dev.nm.algebra.linear.matrix.doubles.factorization.svd.SVD;
+import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.LU;
+import dev.nm.algebra.linear.matrix.doubles.factorization.triangle.cholesky.Chol;
+import dev.nm.algebra.linear.matrix.doubles.linearsystem.LUSolver;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.triangle.*;
+import dev.nm.algebra.linear.matrix.doubles.matrixtype.sparse.CSRSparseMatrix;
+import dev.nm.algebra.linear.matrix.doubles.operation.Inverse;
+import dev.nm.algebra.linear.matrix.doubles.operation.MatrixMeasure;
+import dev.nm.algebra.linear.vector.doubles.Vector;
+import dev.nm.algebra.linear.vector.doubles.dense.DenseVector;
+//import dev.nm.solver.multivariate.constrained.SubProblemMinimizer;
+import dev.nm.solver.multivariate.constrained.convex.sdp.pathfollowing.CentralPath;
+import dev.nm.solver.multivariate.constrained.convex.sdp.pathfollowing.PrimalDualPathFollowingMinimizer;
+import dev.nm.solver.multivariate.constrained.convex.sdp.problem.SDPDualProblem;
+import dev.nm.solver.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualInteriorPointMinimizer;
+import dev.nm.solver.multivariate.constrained.convex.sdp.socp.problem.SOCPDualProblem;
 
 /**
  *
  * @author Ken Yiu
  */
-public class SuanShuImplementation extends AbstractImplementation {
+public class NMDevImplementation extends AbstractImplementation {
 
-    public SuanShuImplementation() {
+    public NMDevImplementation() {
 
         addExecutable(CholeskyDecomposition.class, new AbstractExecutable() {
             @Override
             public void execute(Object[] arguments) {
-                Cholesky chol = new Chol(matrix(arguments[0]));
+                Chol chol = new Chol(matrix(arguments[0]));
                 Object L = chol.L();
             }
         });
@@ -157,12 +154,12 @@ public class SuanShuImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) throws Exception {
                 SOCPDualProblem problem = new SOCPDualProblem(
-                    vector(arguments[1]), // b
-                    new Matrix[]{matrix(arguments[0])}, // A
-                    new Vector[]{vector(arguments[2])}); // c
-                ConstrainedMinimizer<SOCPDualProblem, IterativeSolution<PrimalDualSolution>> socp
-                    = new PrimalDualInteriorPointMinimizer(1e-6, 100);
-                IterativeSolution<PrimalDualSolution> soln1;
+                        vector(arguments[1]), // b
+                        new Matrix[]{matrix(arguments[0])}, // A
+                        new Vector[]{vector(arguments[2])}); // c
+                PrimalDualInteriorPointMinimizer socp
+                        = new PrimalDualInteriorPointMinimizer(1e-6, 100);
+                PrimalDualInteriorPointMinimizer.Solution soln1;
                 soln1 = socp.solve(problem);
                 soln1.search();
                 Vector z = soln1.minimizer().y;
@@ -172,12 +169,12 @@ public class SuanShuImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) throws Exception {
                 SOCPDualProblem problem = new SOCPDualProblem(
-                    vector(arguments[1]), // b
-                    new Matrix[]{matrix(arguments[0])}, // A
-                    new Vector[]{vector(arguments[2])}); // c
-                ConstrainedMinimizer<SOCPDualProblem, IterativeSolution<PrimalDualSolution>> socp
-                    = new PrimalDualInteriorPointMinimizer(1e-6, 100);
-                IterativeSolution<PrimalDualSolution> soln1;
+                        vector(arguments[1]), // b
+                        new Matrix[]{matrix(arguments[0])}, // A
+                        new Vector[]{vector(arguments[2])}); // c
+                PrimalDualInteriorPointMinimizer socp
+                        = new PrimalDualInteriorPointMinimizer(1e-6, 100);
+                PrimalDualInteriorPointMinimizer.Solution soln1;
                 soln1 = socp.solve(problem);
                 soln1.search();
                 Vector z = soln1.minimizer().y;
@@ -187,9 +184,9 @@ public class SuanShuImplementation extends AbstractImplementation {
             @Override
             public void execute(Object[] arguments) throws Exception {
                 SDPDualProblem problem = new SDPDualProblem(
-                    vector(arguments[1]), // b
-                    new SymmetricMatrix(matrix(arguments[2])), // C
-                    new SymmetricMatrix[]{new SymmetricMatrix(matrix(arguments[0]))}); // A[]
+                        vector(arguments[1]), // b
+                        new SymmetricMatrix(matrix(arguments[2])), // C
+                        new SymmetricMatrix[]{new SymmetricMatrix(matrix(arguments[0]))}); // A[]
 
                 PrimalDualPathFollowingMinimizer pdpf = new PrimalDualPathFollowingMinimizer(1e-6);
                 PrimalDualPathFollowingMinimizer.Solution soln = pdpf.solve(problem);
@@ -200,7 +197,7 @@ public class SuanShuImplementation extends AbstractImplementation {
 
     @Override
     public LibraryInfo getLibraryInfo() {
-        return new LibraryInfo("suanshu", "3.3.0");
+        return new LibraryInfo("NM-Dev", "1.2.3");
     }
 
     @Override
@@ -216,11 +213,11 @@ public class SuanShuImplementation extends AbstractImplementation {
                 if (argument instanceof SparseMatrixArgument) {
                     SparseMatrixArgument sparse = (SparseMatrixArgument) argument;
                     return new CSRSparseMatrix(
-                        sparse.nRows(),
-                        sparse.nCols(),
-                        sparse.getRowIndices(),
-                        sparse.getColumnIndices(),
-                        sparse.getValues());
+                            sparse.nRows(),
+                            sparse.nCols(),
+                            sparse.getRowIndices(),
+                            sparse.getColumnIndices(),
+                            sparse.getValues());
                 }
 
                 if (argument instanceof DenseVectorArgument) {

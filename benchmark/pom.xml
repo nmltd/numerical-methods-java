@@ -5,17 +5,17 @@
 
     <groupId>com.numericalmethod</groupId>
     <artifactId>benchmark</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1.20221204-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Numerical Computation API Benchmark</name>
+    <name>Numerical Computation API Benchmarks</name>
 
     <properties>
         <netbeans.hint.license>NumericalMethod</netbeans.hint.license>
         <license.directory>license</license.directory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <suanshu.version>3.3.0</suanshu.version>
+        <nmdev.version>1.2.4</nmdev.version>
         <main.class>com.numericalmethod.benchmark.main.Main</main.class>
         <run.count>30</run.count>
         <detail.mode>true</detail.mode>
@@ -24,6 +24,13 @@
     <repositories>
         <repository>
             <id>nm-repo</id>
+            <name>NM maven repository</name>
+            <url>https://repo.nm.dev/repository/maven-public/</url>
+            <layout>default</layout>
+        </repository>
+        
+        <repository>
+            <id>numericalmethod-repo</id>
             <name>Numerical Method's Maven Repository</name>
             <url>http://repo.numericalmethod.com/maven/</url>
             <layout>default</layout>
@@ -32,9 +39,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.numericalmethod</groupId>
-            <artifactId>dev.nm</artifactId>
-            <version>${nm.version}</version>
+            <groupId>dev.nm</groupId>
+            <artifactId>nmdev</artifactId>
+            <version>${nmdev.version}</version>
         </dependency>
 
         <dependency>
@@ -126,10 +133,16 @@
             <version>0.9-5</version>
         </dependency>
 
+        <!-- utility dependencies -->
         <dependency>
             <groupId>net.sf.supercsv</groupId>
             <artifactId>super-csv</artifactId>
             <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.12.2</version>
         </dependency>
     </dependencies>
 

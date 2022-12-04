@@ -22,8 +22,8 @@
  */
 package com.numericalmethod.benchmark.result;
 
-import static com.numericalmethod.suanshu.number.DoubleUtils.collection2DoubleArray;
-import com.numericalmethod.suanshu.stats.descriptive.moment.Mean;
+import static dev.nm.number.DoubleUtils.collection2DoubleArray;
+import dev.nm.stat.descriptive.moment.Mean;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
