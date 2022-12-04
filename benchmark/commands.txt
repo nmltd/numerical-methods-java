@@ -1,3 +1,0 @@
-cd "C:\Users\kkgup\Documents\KUSHALiit-d\classes\NM-Dev\numerical-methods-java\benchmark"
-mvn package
-java -jar target\benchmark-1.1.0-SNAPSHOT.jar
