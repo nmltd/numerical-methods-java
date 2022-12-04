@@ -1,0 +1,9 @@
+operation,NM-Dev-1.2.3
+"solving SOCP (200 variables, 400 constraints)",1.0
+"solving SOCP (400 variables, 800 constraints)",1.0
+"solving SOCP (800 variables, 1600 constraints)",1.0
+"solving sparse SOCP (200 variables, 400 constraints)",1.0
+"solving sparse SOCP (400 variables, 800 constraints)",1.0
+"solving sparse SOCP (800 variables, 1600 constraints)",1.0
+"solving SDP (20 variables, 1 constraints)",1.0
+"solving SDP (40 variables, 1 constraints)",1.0
