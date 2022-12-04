@@ -42,20 +42,23 @@ import dev.nm.algebra.linear.matrix.doubles.operation.Inverse;
 import dev.nm.algebra.linear.matrix.doubles.operation.MatrixMeasure;
 import dev.nm.algebra.linear.vector.doubles.Vector;
 import dev.nm.algebra.linear.vector.doubles.dense.DenseVector;
+import dev.nm.solver.IterativeSolution;
+import dev.nm.solver.multivariate.constrained.ConstrainedMinimizer;
 //import dev.nm.solver.multivariate.constrained.SubProblemMinimizer;
 import dev.nm.solver.multivariate.constrained.convex.sdp.pathfollowing.CentralPath;
 import dev.nm.solver.multivariate.constrained.convex.sdp.pathfollowing.PrimalDualPathFollowingMinimizer;
 import dev.nm.solver.multivariate.constrained.convex.sdp.problem.SDPDualProblem;
 import dev.nm.solver.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualInteriorPointMinimizer;
+import dev.nm.solver.multivariate.constrained.convex.sdp.socp.interiorpoint.PrimalDualSolution;
 import dev.nm.solver.multivariate.constrained.convex.sdp.socp.problem.SOCPDualProblem;
 
 /**
  *
  * @author Ken Yiu
  */
-public class NMDevImplementation extends AbstractImplementation {
+public class NMDev extends AbstractImplementation {
 
-    public NMDevImplementation() {
+    public NMDev() {
 
         addExecutable(CholeskyDecomposition.class, new AbstractExecutable() {
             @Override
