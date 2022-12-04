@@ -40,9 +40,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         int nRuns = 1;
-//        if (args.length >= 1) {
-//            nRuns = Integer.parseInt(args[0]);
-//        }
+        if (args.length >= 1) {
+            nRuns = Integer.parseInt(args[0]);
+        }
         System.out.println("nRuns = " + nRuns);
         boolean detailMode = false;
         if (args.length >= 2) {
