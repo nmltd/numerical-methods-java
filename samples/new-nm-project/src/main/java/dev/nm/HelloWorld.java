@@ -29,18 +29,18 @@ import dev.nm.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
  *
  * @author haksunli
  */
-public class Example0010 {
+public class HelloWorld {
 
     public static void main(String[] args) {
-        Example0010 example0010 = new Example0010();
-        example0010.function1();
+        HelloWorld example0010 = new HelloWorld();
+        example0010.fun1();
     }
 
-    public void function1() {
+    public void fun1() {
         System.out.println("Hello World!");
     }
 
-    public int function2() {
+    public int fun2() {
         Matrix A = new DenseMatrix(new double[][]{{1, 2}, {3, 4}});
         return A.nCols();
     }

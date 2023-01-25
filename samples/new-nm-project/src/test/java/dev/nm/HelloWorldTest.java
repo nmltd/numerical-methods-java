@@ -29,12 +29,12 @@ import static org.junit.Assert.*;
  *
  * @author haksunli
  */
-public class Example0010Test {
+public class HelloWorldTest {
 
     @Test
     public void test_0010() {
-        Example0010 instance = new Example0010();
-        assertEquals(2, instance.function2());
+        HelloWorld instance = new HelloWorld();
+        assertEquals(2, instance.fun2());
     }
 
 }
