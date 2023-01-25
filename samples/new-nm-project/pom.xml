@@ -44,29 +44,19 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>3.0.0-M8</artifactId>
-                <version>2.14</version>
-                <configuration>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
-                </configuration>
-            </plugin>            
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>add-resource</id>
-                        <phase>generate-resources</phase>
+                        <id>aggregate</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>add-resource</goal>
+                            <goal>single</goal>
                         </goals>
                         <configuration>
-                            <resources>
-                                <resource>
-                                    <directory>${license.directory}</directory>
-                                </resource>
-                            </resources>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
                 </executions>
@@ -86,6 +76,11 @@
             <groupId>dev.nm</groupId>
             <artifactId>nmdev</artifactId>
             <version>1.2.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.teneighty</groupId>
+            <artifactId>heaps</artifactId>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
