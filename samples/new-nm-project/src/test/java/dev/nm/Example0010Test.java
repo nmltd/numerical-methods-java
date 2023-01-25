@@ -20,9 +20,8 @@
  * ANY CLAIMS, DAMAGES OR OTHER LIABILITIES,
  * ARISING AS A RESULT OF USING OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package tech.nmfin;
+package dev.nm;
 
-import dev.nm.Example0010;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
