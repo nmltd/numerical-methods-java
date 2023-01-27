@@ -33,7 +33,7 @@ public class HelloWorld {
 
     public static void main(String[] args) {
         HelloWorld example0010 = new HelloWorld();
-        example0010.fun1();
+        example0010.fun2();
     }
 
     public void fun1() {
@@ -42,6 +42,7 @@ public class HelloWorld {
 
     public int fun2() {
         Matrix A = new DenseMatrix(new double[][]{{1, 2}, {3, 4}});
+        System.out.println("A number of columns = " + A.nCols());
         return A.nCols();
     }
 

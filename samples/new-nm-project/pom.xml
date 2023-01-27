@@ -7,7 +7,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>new-nm-project</name>
+    <name>new-nmdev-project</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -39,7 +39,7 @@
             <layout>default</layout>
         </repository> 
     </repositories>
-
+    
     <build>
         <plugins>
             <plugin>
@@ -70,6 +70,11 @@
             <artifactId>nmdev</artifactId>
             <version>1.2.5-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>dev.nm</groupId>
+            <artifactId>nmlicense</artifactId>
+            <version>1.0.0</version>
+        </dependency>        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
