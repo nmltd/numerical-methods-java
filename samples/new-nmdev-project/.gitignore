@@ -1,3 +1,4 @@
 /target/
 *.lic
+!nm.lic
 *.key

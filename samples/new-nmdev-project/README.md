@@ -22,7 +22,7 @@ Set those environment variables locally. Never commit a token.
 
 ## License, build and run
 
-Place your valid NMDEV license at `samples/new-nmdev-project/nm.lic`. It remains external to the application JAR. Run these commands from this sample directory:
+A trial license is included at `samples/new-nmdev-project/nm.lic`. The runtime loads this external file from the current working directory; run the commands below from this sample directory. Trial validity and entitlements are enforced by NMDEV. Replace it with your own valid license when the trial expires. The license is not embedded in the application JAR. Run these commands from this sample directory:
 ```bash
 mvn -U clean verify
 java -jar target/new-nm-project-1.0.0-SNAPSHOT.jar
