@@ -1,0 +1,40 @@
+name: Build and run public NM Dev starter
+on:
+  push:
+    branches: [main]
+    paths: ['samples/new-nmdev-project/**', '.github/workflows/nmdev-starter.yml']
+  pull_request:
+    paths: ['samples/new-nmdev-project/**', '.github/workflows/nmdev-starter.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Maven 3.9.9
+        run: |
+          curl --fail --silent --show-error --location https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/apache-maven-3.9.9-bin.tar.gz --output "$RUNNER_TEMP/maven.tar.gz"
+          echo "a555254d6b53d267965a3404ecb14e53c3827c09c3b94b5678835887ab404556bfaf78dcfe03ba76fa2508649dca8531c74bca4d5846513522404d48e8c4ac8b  $RUNNER_TEMP/maven.tar.gz" | sha512sum --check
+          tar -xzf "$RUNNER_TEMP/maven.tar.gz" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/apache-maven-3.9.9/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          server-id: github-nmdev
+      - name: Download public NM Dev, build and run from a fresh cache
+        working-directory: samples/new-nmdev-project
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: mvn -B -ntp -U -Dmaven.repo.local="$RUNNER_TEMP/m2" clean verify exec:java
+      - name: Run the packaged sample and graph example
+        working-directory: samples/new-nmdev-project
+        run: |
+          java -jar target/new-nm-project-1.0.0-SNAPSHOT.jar
+          java -cp "target/new-nm-project-1.0.0-SNAPSHOT.jar:target/lib/*" dev.nm.Graph

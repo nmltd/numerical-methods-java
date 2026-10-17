@@ -18,7 +18,7 @@
         <repository>
             <id>github-nmdev</id>
             <name>NMDEV GitHub Packages</name>
-            <url>https://maven.pkg.github.com/nmltd/nmdev</url>
+            <url>https://maven.pkg.github.com/nmltd/maven-packages</url>
             <releases><enabled>true</enabled></releases>
             <snapshots><enabled>true</enabled></snapshots>
         </repository>
@@ -26,7 +26,7 @@
     <dependencies>
         <dependency>
             <groupId>dev.nm</groupId>
-            <artifactId>nmdev</artifactId>
+            <artifactId>nmdev-dist</artifactId>
             <version>${nmdev.version}</version>
         </dependency>
         <dependency>
