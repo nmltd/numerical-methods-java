@@ -28,10 +28,10 @@ jobs:
           distribution: temurin
           java-version: '8'
           server-id: github-nmdev
-      - name: Download public NM Dev, build and run from a fresh cache
+      - name: Download stable NM Dev, build and run from a fresh cache
         working-directory: samples/new-nmdev-project
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.NM_REPOSITORIES_TOKEN || github.token }}
         run: mvn -B -ntp -U -Dmaven.repo.local="$RUNNER_TEMP/m2" clean verify exec:java
       - name: Run the packaged sample and graph example
         working-directory: samples/new-nmdev-project
