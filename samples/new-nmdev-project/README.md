@@ -1,17 +1,17 @@
 # New NMDEV project
 
-This sample uses the published obfuscated combined `dev.nm:nmdev:1.2.6` JAR from GitHub Packages. Java 8 or later and Maven are required.
+This sample uses the published obfuscated combined `dev.nm:nmdev-dist:1.2.6` JAR from GitHub Packages. Java 8 or later and Maven are required.
 
 ## Authentication
 
-The binary package is hosted at https://maven.pkg.github.com/nmltd/nmdev. Your GitHub account and token must have access to the package; contact NM Dev for access. Create a personal access token (classic) with `read:packages` using [GitHub's instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
+The binary package is hosted at https://maven.pkg.github.com/nmltd/maven-packages. The binary package is public; no access to the private source repository is required. GitHub still requires authentication for Maven downloads. Create a personal access token (classic) with `read:packages` using [GitHub's instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
 
 Add the following server to `~/.m2/settings.xml` (merge it into existing settings):
 ```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.2.0">
   <servers>
     <server>
-      <id>github-nmdev</id>
+      <id>github-nm-packages</id>
       <username>${env.GITHUB_USERNAME}</username>
       <password>${env.GITHUB_PACKAGES_TOKEN}</password>
     </server>
